@@ -57,71 +57,71 @@ class _AccountWidgetState extends State<AccountWidget> {
               ],
             ),
           ),
-          Container(
-            margin: EdgeInsets.symmetric(horizontal: 20),
-            decoration: BoxDecoration(
-              color: Theme.of(context).primaryColor,
-              borderRadius: BorderRadius.circular(6),
-              boxShadow: [
-                BoxShadow(color: Theme.of(context).hintColor.withOpacity(0.15), offset: Offset(0, 3), blurRadius: 10)
-              ],
-            ),
-            child: Row(
-              children: <Widget>[
-                Expanded(
-                  child: FlatButton(
-                    padding: EdgeInsets.symmetric(vertical: 15, horizontal: 10),
-                    onPressed: () {
-                      Navigator.of(context).pushNamed('/Tabs', arguments: 4);
-                    },
-                    child: Column(
-                      children: <Widget>[
-                        Icon(UiIcons.heart),
-                        Text(
-                          'Wish List',
-                          style: Theme.of(context).textTheme.body1,
-                        )
-                      ],
-                    ),
-                  ),
-                ),
-                Expanded(
-                  child: FlatButton(
-                    padding: EdgeInsets.symmetric(vertical: 15, horizontal: 10),
-                    onPressed: () {
-                      Navigator.of(context).pushNamed('/Tabs', arguments: 0);
-                    },
-                    child: Column(
-                      children: <Widget>[
-                        Icon(UiIcons.favorites),
-                        Text(
-                          'Following',
-                          style: Theme.of(context).textTheme.body1,
-                        )
-                      ],
-                    ),
-                  ),
-                ),
-                Expanded(
-                  child: FlatButton(
-                    padding: EdgeInsets.symmetric(vertical: 15, horizontal: 10),
-                    onPressed: () {
-                      Navigator.of(context).pushNamed('/Tabs', arguments: 3);
-                    },
-                    child: Column(
-                      children: <Widget>[
-                        Icon(UiIcons.chat_1),
-                        Text(
-                          'Messages',
-                          style: Theme.of(context).textTheme.body1,
-                        )
-                      ],
-                    ),
-                  ),
-                ),
-              ],
-            ),
-          ),
+          // Container(
+          //   margin: EdgeInsets.symmetric(horizontal: 20),
+          //   decoration: BoxDecoration(
+          //     color: Theme.of(context).primaryColor,
+          //     borderRadius: BorderRadius.circular(6),
+          //     boxShadow: [
+          //       BoxShadow(color: Theme.of(context).hintColor.withOpacity(0.15), offset: Offset(0, 3), blurRadius: 10)
+          //     ],
+          //   ),
+          //   child: Row(
+          //     children: <Widget>[
+          //       Expanded(
+          //         child: FlatButton(
+          //           padding: EdgeInsets.symmetric(vertical: 15, horizontal: 10),
+          //           onPressed: () {
+          //             Navigator.of(context).pushNamed('/Tabs', arguments: 4);
+          //           },
+          //           child: Column(
+          //             children: <Widget>[
+          //               Icon(UiIcons.heart),
+          //               Text(
+          //                 'Wish List',
+          //                 style: Theme.of(context).textTheme.body1,
+          //               )
+          //             ],
+          //           ),
+          //         ),
+          //       ),
+          //       Expanded(
+          //         child: FlatButton(
+          //           padding: EdgeInsets.symmetric(vertical: 15, horizontal: 10),
+          //           onPressed: () {
+          //             Navigator.of(context).pushNamed('/Tabs', arguments: 0);
+          //           },
+          //           child: Column(
+          //             children: <Widget>[
+          //               Icon(UiIcons.favorites),
+          //               Text(
+          //                 'Following',
+          //                 style: Theme.of(context).textTheme.body1,
+          //               )
+          //             ],
+          //           ),
+          //         ),
+          //       ),
+          //       Expanded(
+          //         child: FlatButton(
+          //           padding: EdgeInsets.symmetric(vertical: 15, horizontal: 10),
+          //           onPressed: () {
+          //             Navigator.of(context).pushNamed('/Tabs', arguments: 3);
+          //           },
+          //           child: Column(
+          //             children: <Widget>[
+          //               Icon(UiIcons.chat_1),
+          //               Text(
+          //                 'Messages',
+          //                 style: Theme.of(context).textTheme.body1,
+          //               )
+          //             ],
+          //           ),
+          //         ),
+          //       ),
+          //     ],
+          //   ),
+          // ),
           Container(
             margin: EdgeInsets.symmetric(horizontal: 20, vertical: 15),
             decoration: BoxDecoration(
@@ -204,91 +204,91 @@ class _AccountWidgetState extends State<AccountWidget> {
               ],
             ),
           ),
-          Container(
-            margin: EdgeInsets.symmetric(horizontal: 20, vertical: 15),
-            decoration: BoxDecoration(
-              color: Theme.of(context).primaryColor,
-              borderRadius: BorderRadius.circular(6),
-              boxShadow: [
-                BoxShadow(color: Theme.of(context).hintColor.withOpacity(0.15), offset: Offset(0, 3), blurRadius: 10)
-              ],
-            ),
-            child: ListView(
-              shrinkWrap: true,
-              primary: false,
-              children: <Widget>[
-                ListTile(
-                  leading: Icon(UiIcons.settings_1),
-                  title: Text(
-                    'Account Settings',
-                    style: Theme.of(context).textTheme.body2,
-                  ),
-                ),
-                ListTile(
-                  onTap: () {},
-                  dense: true,
-                  title: Row(
-                    children: <Widget>[
-                      Icon(
-                        UiIcons.placeholder,
-                        size: 22,
-                        color: Theme.of(context).focusColor,
-                      ),
-                      SizedBox(width: 10),
-                      Text(
-                        'Shipping Adresses',
-                        style: Theme.of(context).textTheme.body1,
-                      ),
-                    ],
-                  ),
-                ),
-                ListTile(
-                  onTap: () {
-                    Navigator.of(context).pushNamed('/Languages');
-                  },
-                  dense: true,
-                  title: Row(
-                    children: <Widget>[
-                      Icon(
-                        UiIcons.planet_earth,
-                        size: 22,
-                        color: Theme.of(context).focusColor,
-                      ),
-                      SizedBox(width: 10),
-                      Text(
-                        'Languages',
-                        style: Theme.of(context).textTheme.body1,
-                      ),
-                    ],
-                  ),
-                  trailing: Text(
-                    'English',
-                    style: TextStyle(color: Theme.of(context).focusColor),
-                  ),
-                ),
-                ListTile(
-                  onTap: () {
-                    Navigator.of(context).pushNamed('/Help');
-                  },
-                  dense: true,
-                  title: Row(
-                    children: <Widget>[
-                      Icon(
-                        UiIcons.information,
-                        size: 22,
-                        color: Theme.of(context).focusColor,
-                      ),
-                      SizedBox(width: 10),
-                      Text(
-                        'Help & Support',
-                        style: Theme.of(context).textTheme.body1,
-                      ),
-                    ],
-                  ),
-                ),
-              ],
-            ),
-          ),
+          // Container(
+          //   margin: EdgeInsets.symmetric(horizontal: 20, vertical: 15),
+          //   decoration: BoxDecoration(
+          //     color: Theme.of(context).primaryColor,
+          //     borderRadius: BorderRadius.circular(6),
+          //     boxShadow: [
+          //       BoxShadow(color: Theme.of(context).hintColor.withOpacity(0.15), offset: Offset(0, 3), blurRadius: 10)
+          //     ],
+          //   ),
+          //   child: ListView(
+          //     shrinkWrap: true,
+          //     primary: false,
+          //     children: <Widget>[
+          //       ListTile(
+          //         leading: Icon(UiIcons.settings_1),
+          //         title: Text(
+          //           'Account Settings',
+          //           style: Theme.of(context).textTheme.body2,
+          //         ),
+          //       ),
+          //       ListTile(
+          //         onTap: () {},
+          //         dense: true,
+          //         title: Row(
+          //           children: <Widget>[
+          //             Icon(
+          //               UiIcons.placeholder,
+          //               size: 22,
+          //               color: Theme.of(context).focusColor,
+          //             ),
+          //             SizedBox(width: 10),
+          //             Text(
+          //               'Shipping Adresses',
+          //               style: Theme.of(context).textTheme.body1,
+          //             ),
+          //           ],
+          //         ),
+          //       ),
+          //       ListTile(
+          //         onTap: () {
+          //           Navigator.of(context).pushNamed('/Languages');
+          //         },
+          //         dense: true,
+          //         title: Row(
+          //           children: <Widget>[
+          //             Icon(
+          //               UiIcons.planet_earth,
+          //               size: 22,
+          //               color: Theme.of(context).focusColor,
+          //             ),
+          //             SizedBox(width: 10),
+          //             Text(
+          //               'Languages',
+          //               style: Theme.of(context).textTheme.body1,
+          //             ),
+          //           ],
+          //         ),
+          //         trailing: Text(
+          //           'English',
+          //           style: TextStyle(color: Theme.of(context).focusColor),
+          //         ),
+          //       ),
+          //       ListTile(
+          //         onTap: () {
+          //           Navigator.of(context).pushNamed('/Help');
+          //         },
+          //         dense: true,
+          //         title: Row(
+          //           children: <Widget>[
+          //             Icon(
+          //               UiIcons.information,
+          //               size: 22,
+          //               color: Theme.of(context).focusColor,
+          //             ),
+          //             SizedBox(width: 10),
+          //             Text(
+          //               'Help & Support',
+          //               style: Theme.of(context).textTheme.body1,
+          //             ),
+          //           ],
+          //         ),
+          //       ),
+          //     ],
+          //   ),
+          // ),
         ],
       ),
     );

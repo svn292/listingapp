@@ -33,7 +33,7 @@ class DrawerWidget extends StatelessWidget {
           ),
           ListTile(
             onTap: () {
-              Navigator.of(context).pushNamed('/Tabs', arguments: 2);
+              Navigator.of(context).pushNamed('/Tabs', arguments: 0);
             },
             leading: Icon(
               UiIcons.home,
@@ -44,22 +44,22 @@ class DrawerWidget extends StatelessWidget {
               style: Theme.of(context).textTheme.subhead,
             ),
           ),
+          // ListTile(
+          //   onTap: () {
+          //     Navigator.of(context).pushNamed('/Tabs', arguments: 0);
+          //   },
+          //   leading: Icon(
+          //     UiIcons.bell,
+          //     color: Theme.of(context).focusColor.withOpacity(1),
+          //   ),
+          //   title: Text(
+          //     "Notifications",
+          //     style: Theme.of(context).textTheme.subhead,
+          //   ),
+          // ),
           ListTile(
             onTap: () {
-              Navigator.of(context).pushNamed('/Tabs', arguments: 0);
-            },
-            leading: Icon(
-              UiIcons.bell,
-              color: Theme.of(context).focusColor.withOpacity(1),
-            ),
-            title: Text(
-              "Notifications",
-              style: Theme.of(context).textTheme.subhead,
-            ),
-          ),
-          ListTile(
-            onTap: () {
-              Navigator.of(context).pushNamed('/Tabs', arguments: 4);
+              Navigator.of(context).pushNamed('/Tabs', arguments: 2);
             },
             leading: Icon(
               UiIcons.heart,
@@ -83,20 +83,10 @@ class DrawerWidget extends StatelessWidget {
               style: Theme.of(context).textTheme.subhead,
             ),
           ),
-          ListTile(
-            dense: true,
-            title: Text(
-              "Application Preferences",
-              style: Theme.of(context).textTheme.body1,
-            ),
-            trailing: Icon(
-              Icons.remove,
-              color: Theme.of(context).focusColor.withOpacity(0.3),
-            ),
-          ),
+    
           ListTile(
             onTap: () {
-              Navigator.of(context).pushNamed('/Tabs', arguments: 1);
+              Navigator.of(context).pushNamed('/Tabs', arguments: 3);
             },
             leading: Icon(
               UiIcons.settings_1,
@@ -107,19 +97,19 @@ class DrawerWidget extends StatelessWidget {
               style: Theme.of(context).textTheme.subhead,
             ),
           ),
-          ListTile(
-            onTap: () {
-              Navigator.of(context).pushNamed('/Languages');
-            },
-            leading: Icon(
-              UiIcons.planet_earth,
-              color: Theme.of(context).focusColor.withOpacity(1),
-            ),
-            title: Text(
-              "Languages",
-              style: Theme.of(context).textTheme.subhead,
-            ),
-          ),
+          // ListTile(
+          //   onTap: () {
+          //     Navigator.of(context).pushNamed('/Languages');
+          //   },
+          //   leading: Icon(
+          //     UiIcons.planet_earth,
+          //     color: Theme.of(context).focusColor.withOpacity(1),
+          //   ),
+          //   title: Text(
+          //     "Languages",
+          //     style: Theme.of(context).textTheme.subhead,
+          //   ),
+          // ),
           ListTile(
             onTap: () {
               Navigator.of(context).pushNamed('/SignIn');
