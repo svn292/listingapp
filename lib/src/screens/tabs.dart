@@ -32,7 +32,6 @@ class _TabsWidgetState extends State<TabsWidget> {
   final GlobalKey<ScaffoldState> _scaffoldKey = new GlobalKey<ScaffoldState>();
   @override
   initState() {
-    
     _selectTab(widget.currentTab);
     super.initState();
   }
@@ -68,16 +67,20 @@ class _TabsWidgetState extends State<TabsWidget> {
           widget.currentTitle = 'Favorites';
           widget.currentPage = FavoritesWidget();
           break;
-        case 5:
+        // case 5:
+        //   widget.selectedTab = 3;
+        //   widget.currentTitle = 'Chat';
+        //   widget.currentPage = ChatWidget();
+        //   break;
+        case 6:
           widget.selectedTab = 3;
-          widget.currentTitle = 'Chat';
-          widget.currentPage = ChatWidget();
-          break;
-           case 6:
-           widget.selectedTab = 3;
           widget.currentTitle = 'Categories';
           widget.currentPage = CategoriesNew();
           break;
+        default:
+          widget.selectedTab = 3;
+          widget.currentTitle = 'Home';
+          widget.currentPage = HomeWidget();
       }
     });
   }
@@ -134,7 +137,7 @@ class _TabsWidgetState extends State<TabsWidget> {
         // this will be set when a new tab is tapped
         items: [
           BottomNavigationBarItem(
-            icon: Icon(UiIcons.bell),
+            icon: Icon(UiIcons.folder_1),
             title: new Container(height: 0.0),
           ),
           BottomNavigationBarItem(
@@ -153,17 +156,22 @@ class _TabsWidgetState extends State<TabsWidget> {
                   ),
                   boxShadow: [
                     BoxShadow(
-                        color: Theme.of(context).accentColor.withOpacity(0.4), blurRadius: 40, offset: Offset(0, 15)),
+                        color: Theme.of(context).accentColor.withOpacity(0.4),
+                        blurRadius: 40,
+                        offset: Offset(0, 15)),
                     BoxShadow(
-                        color: Theme.of(context).accentColor.withOpacity(0.4), blurRadius: 13, offset: Offset(0, 3))
+                        color: Theme.of(context).accentColor.withOpacity(0.4),
+                        blurRadius: 13,
+                        offset: Offset(0, 3))
                   ],
                 ),
-                child: new Icon(UiIcons.home, color: Theme.of(context).primaryColor),
+                child: new Icon(UiIcons.home,
+                    color: Theme.of(context).primaryColor),
               )),
-          BottomNavigationBarItem(
-            icon: new Icon(UiIcons.chat),
-            title: new Container(height: 0.0),
-          ),
+          // BottomNavigationBarItem(
+          //   icon: new Icon(UiIcons.chat),
+          //   title: new Container(height: 0.0),
+          // ),
           BottomNavigationBarItem(
             icon: new Icon(UiIcons.heart),
             title: new Container(height: 0.0),

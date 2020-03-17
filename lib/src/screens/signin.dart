@@ -126,15 +126,16 @@ class _SignInWidgetState extends State<SignInWidget> {
                         padding:
                             EdgeInsets.symmetric(vertical: 12, horizontal: 70),
                         onPressed: () async {
+                           print("JJJJJJJJJJJJJJJJJJJJJJJJJJJJJJJJJJJJJJJJJJJJJJJJJ");
                           Map<String, String> body = Map();
                           var url = "$BASEURL/login";
                           body["email"] = _txtEmail.text;
                           body["password"] = _txtPassword.text;
-                          try {
+                          // try {
                             FormData formData = new FormData.fromMap(body);
                             var response =
                                 await Dio().post(url, data: formData);
-                            print(jsonDecode(response.data)['login'] +
+                            print(response.data+
                                 "    :   LOGINNNNNNNNNNNNNNNn");
                             if (jsonDecode(response.data)['login'] == 'true') {
                               Navigator.of(context)
@@ -149,16 +150,16 @@ class _SignInWidgetState extends State<SignInWidget> {
                                   textColor: Colors.white,
                                   fontSize: 16.0);
                             }
-                          } catch (e) {
-                            Fluttertoast.showToast(
-                                msg: "LOGIN ERROR",
-                                toastLength: Toast.LENGTH_SHORT,
-                                gravity: ToastGravity.BOTTOM,
-                                timeInSecForIos: 1,
-                                backgroundColor: Colors.red,
-                                textColor: Colors.white,
-                                fontSize: 16.0);
-                          }
+                          // } catch (e) {
+                          //   Fluttertoast.showToast(
+                          //       msg: "LOGIN ERROR",
+                          //       toastLength: Toast.LENGTH_SHORT,
+                          //       gravity: ToastGravity.BOTTOM,
+                          //       timeInSecForIos: 1,
+                          //       backgroundColor: Colors.red,
+                          //       textColor: Colors.white,
+                          //       fontSize: 16.0);
+                          // }
                         },
                         child: Text(
                           'Login',

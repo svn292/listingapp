@@ -1,1 +1,1 @@
-String BASEURL = "https://daangor.com/api";
+String BASEURL = "http://api.smtechnoservice.com/api";
