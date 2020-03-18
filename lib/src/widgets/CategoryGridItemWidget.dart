@@ -1,19 +1,16 @@
+import 'package:daangor/src/models/category_model.dart';
 import 'package:daangor/src/models/route_argument.dart';
 import 'package:flutter/material.dart';
 import 'package:daangor/src/models/utilities.dart';
-import 'package:dio/dio.dart';
-import 'package:daangor/src/util/constants.dart';
-import 'dart:convert';
-import 'package:daangor/src/models/listing.dart';
 
-class UtilitietGridItemWidget extends StatelessWidget {
-  const UtilitietGridItemWidget({
+class CategoryGridItemWidget extends StatelessWidget {
+  const CategoryGridItemWidget({
     Key key,
-    @required this.listingItem,
+    @required this.categoryModel,
     @required this.heroTag,
   }) : super(key: key);
 
-  final ListingItem listingItem;
+  final CategoryModel categoryModel;
   final String heroTag;
 
   @override
@@ -22,8 +19,8 @@ class UtilitietGridItemWidget extends StatelessWidget {
       highlightColor: Colors.transparent,
       splashColor: Theme.of(context).accentColor.withOpacity(0.08),
       onTap: () {
-        Navigator.of(context).pushNamed('/Utilities',
-            arguments:listingItem);
+        // Navigator.of(context).pushNamed('/Utilities',
+        //     arguments: new RouteArgument(argumentsList: [this.utilitie, this.heroTag], id: this.utilitie.id));
       },
       child: Container(
         //margin: EdgeInsets.all(20),
@@ -40,14 +37,14 @@ class UtilitietGridItemWidget extends StatelessWidget {
           crossAxisAlignment: CrossAxisAlignment.start,
           children: <Widget>[
             Hero(
-              tag: this.heroTag + listingItem.hashCode.toString(),
-              child: Image.network(listingItem.imgUrl),
+              tag: this.heroTag + categoryModel.id,
+              child: Image.network(categoryModel.imageURL),
             ),
             SizedBox(height: 12),
             Padding(
               padding: const EdgeInsets.symmetric(horizontal: 15, vertical: 5),
               child: Text(
-                listingItem.name,
+                categoryModel.name,
                 style: Theme.of(context).textTheme.body2,
               ),
             ),
@@ -85,7 +82,7 @@ class UtilitietGridItemWidget extends StatelessWidget {
                 
             //   ),
             // ),
-            // SizedBox(height: 15),
+            SizedBox(height: 15),
           ],
         ),
       ),

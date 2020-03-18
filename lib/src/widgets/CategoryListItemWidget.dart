@@ -1,27 +1,34 @@
+import 'dart:convert';
+
 import 'package:daangor/config/ui_icons.dart';
+import 'package:daangor/src/models/category_model.dart';
 import 'package:daangor/src/models/listing.dart';
+import 'package:daangor/src/models/utilities.dart';
 import 'package:daangor/src/models/route_argument.dart';
+import 'package:daangor/src/util/constants.dart';
+import 'package:dio/dio.dart';
 import 'package:flutter/material.dart';
 
 // ignore: must_be_immutable
-class FavoriteListItemWidget extends StatefulWidget {
+class CategoryListItemWidget extends StatefulWidget {
   String heroTag;
-  ListingItem listingItem;
+  CategoryModel categoryModel;
+  // Utilitie utilitie;
   VoidCallback onDismissed;
 
-  FavoriteListItemWidget(
-      {Key key, this.heroTag, this.listingItem, this.onDismissed})
+  CategoryListItemWidget(
+      {Key key, this.heroTag, this.categoryModel, this.onDismissed})
       : super(key: key);
 
   @override
-  _FavoriteListItemWidgetState createState() => _FavoriteListItemWidgetState();
+  _CategoryListItemWidgetState createState() => _CategoryListItemWidgetState();
 }
 
-class _FavoriteListItemWidgetState extends State<FavoriteListItemWidget> {
+class _CategoryListItemWidgetState extends State<CategoryListItemWidget> {
   @override
   Widget build(BuildContext context) {
     return Dismissible(
-      key: Key(this.widget.listingItem.hashCode.toString()),
+      key: Key(this.widget.categoryModel.hashCode.toString()),
       background: Container(
         color: Colors.red,
         child: Align(
@@ -44,15 +51,29 @@ class _FavoriteListItemWidgetState extends State<FavoriteListItemWidget> {
         // Then show a snackbar.
         Scaffold.of(context).showSnackBar(SnackBar(
             content: Text(
-                "The ${widget.listingItem.name} Iteml is removed from wish list")));
+                "The ${widget.categoryModel.name} Category is removed from wish list")));
       },
       child: InkWell(
         splashColor: Theme.of(context).accentColor,
         focusColor: Theme.of(context).accentColor,
         highlightColor: Theme.of(context).primaryColor,
-        onTap: () {
-          Navigator.of(context)
-              .pushNamed('/Utilities', arguments: widget.listingItem);
+        onTap: () async {
+          var response = await Dio()
+              .get("$BASEURL/singlelisting/${widget.categoryModel.id}");
+          print("MMMMMMMMM   ::   " + response.data);
+          var data = jsonDecode(response.data);
+          ListingItem listingItem = ListingItem(
+              data['code'],
+              data['name'],
+              data['listing_type'],
+              data['listing_cover'] == null
+                  ? "https://daangor.com/uploads/listing_thumbnails/thumbnail.png"
+                  : CAT_TUMB_BASE_URL + data['listing_cover'],
+              data['description'],
+                    data['category'][0],
+                  data['address'],
+                  data['phone']);
+          Navigator.of(context).pushNamed('/Utilities', arguments: listingItem);
         },
         child: Container(
           padding: EdgeInsets.symmetric(horizontal: 20, vertical: 8),
@@ -69,14 +90,14 @@ class _FavoriteListItemWidgetState extends State<FavoriteListItemWidget> {
             mainAxisAlignment: MainAxisAlignment.start,
             children: <Widget>[
               Hero(
-                tag: widget.heroTag + widget.listingItem.hashCode.toString(),
+                tag: widget.heroTag + widget.categoryModel.id,
                 child: Container(
                   height: 60,
                   width: 60,
                   decoration: BoxDecoration(
                     borderRadius: BorderRadius.all(Radius.circular(5)),
                     image: DecorationImage(
-                        image: NetworkImage(widget.listingItem.imgUrl),
+                        image: NetworkImage(widget.categoryModel.imageURL),
                         fit: BoxFit.cover),
                   ),
                 ),
@@ -92,7 +113,7 @@ class _FavoriteListItemWidgetState extends State<FavoriteListItemWidget> {
                         crossAxisAlignment: CrossAxisAlignment.start,
                         children: <Widget>[
                           Text(
-                            widget.listingItem.name,
+                            widget.categoryModel.name,
                             overflow: TextOverflow.ellipsis,
                             maxLines: 2,
                             style: Theme.of(context).textTheme.subhead,
@@ -118,9 +139,9 @@ class _FavoriteListItemWidgetState extends State<FavoriteListItemWidget> {
                         ],
                       ),
                     ),
-                  //   SizedBox(width: 8),
-                  //   Text('${widget.utilitie.available} viewers',
-                  //       style: Theme.of(context).textTheme.display1),
+                    // SizedBox(width: 8),
+                    // Text('${widget.utilitie.available} viewers',
+                    //     style: Theme.of(context).textTheme.display1),
                   ],
                 ),
               )

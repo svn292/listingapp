@@ -1,6 +1,11 @@
+import 'dart:convert';
+
 import 'package:daangor/config/ui_icons.dart';
+import 'package:daangor/src/models/listing.dart';
 import 'package:daangor/src/models/utilities.dart';
+import 'package:daangor/src/util/constants.dart';
 import 'package:daangor/src/widgets/PopularLocationCarouselWidget.dart';
+import 'package:dio/dio.dart';
 import 'package:flutter/material.dart';
 
 class UtilitiesDetailsTabWidget extends StatefulWidget {
@@ -10,10 +15,41 @@ class UtilitiesDetailsTabWidget extends StatefulWidget {
   UtilitiesDetailsTabWidget({this.utilitie});
 
   @override
-  UtilitiesDetailsTabWidgetState createState() => UtilitiesDetailsTabWidgetState();
+  UtilitiesDetailsTabWidgetState createState() =>
+      UtilitiesDetailsTabWidgetState();
 }
 
 class UtilitiesDetailsTabWidgetState extends State<UtilitiesDetailsTabWidget> {
+  List<ListingItem> listingItems = List();
+  getPopularList() async {
+    var response = await Dio().get("$BASEURL/popular_listing");
+    print("MMMMMMMMM   ::   " + response.data);
+
+    var data = jsonDecode(response.data);
+    setState(() {
+      listingItems.clear();
+      for (Map dt in data) {
+        listingItems.add(ListingItem(
+            dt['code'],
+            dt['name'],
+            dt['listing_type'],
+            dt['listing_cover'] == null
+                ? "https://daangor.com/uploads/listing_thumbnails/thumbnail.png"
+                : CAT_TUMB_BASE_URL + dt['listing_cover'],
+            dt['description'],
+            dt['category'][0],
+            dt['address'],
+            dt['phone']));
+      }
+    });
+  }
+
+  @override
+  void initState() {
+    getPopularList();
+    super.initState();
+  }
+
   @override
   Widget build(BuildContext context) {
     return Column(
@@ -55,7 +91,9 @@ class UtilitiesDetailsTabWidgetState extends State<UtilitiesDetailsTabWidget> {
           ),
         ),
         PopularLocationCarouselWidget(
-            heroTag: 'product_details_related_products', utilitiesList: widget._utilitiesList.popularList),
+          heroTag: 'product_details_related_products',
+          listingList: listingItems,
+        ),
       ],
     );
   }
@@ -113,4 +151,3 @@ class _SelectColorWidgetState extends State<SelectColorWidget> {
     );
   }
 }
-

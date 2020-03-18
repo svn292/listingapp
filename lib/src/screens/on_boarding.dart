@@ -101,7 +101,7 @@ class _OnBoardingWidgetState extends State<OnBoardingWidget> {
                                   TextStyle(color: Theme.of(context).primaryColor),
                                 ),
                       ),
-                      color: Theme.of(context).accentColor,
+                      color: Color.fromRGBO(55, 169, 157, 1),
                       shape: RoundedRectangleBorder(
                         borderRadius: new BorderRadius.circular(50),
                       ),

@@ -7,6 +7,8 @@ import 'package:dio/dio.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:fluttertoast/fluttertoast.dart';
+import 'package:shared_preferences/shared_preferences.dart';
+import 'package:url_launcher/url_launcher.dart';
 
 class SignInWidget extends StatefulWidget {
   @override
@@ -115,7 +117,14 @@ class _SignInWidgetState extends State<SignInWidget> {
                       ),
                       SizedBox(height: 20),
                       FlatButton(
-                        onPressed: () {},
+                        onPressed: () async {
+                          const url = 'http://daangor.com/home/forgot_password';
+                          if (await canLaunch(url)) {
+                            await launch(url);
+                          } else {
+                            throw 'Could not launch $url';
+                          }
+                        },
                         child: Text(
                           'Forgot your password ?',
                           style: Theme.of(context).textTheme.body1,
@@ -126,30 +135,39 @@ class _SignInWidgetState extends State<SignInWidget> {
                         padding:
                             EdgeInsets.symmetric(vertical: 12, horizontal: 70),
                         onPressed: () async {
-                           print("JJJJJJJJJJJJJJJJJJJJJJJJJJJJJJJJJJJJJJJJJJJJJJJJJ");
+                          print(
+                              "JJJJJJJJJJJJJJJJJJJJJJJJJJJJJJJJJJJJJJJJJJJJJJJJJ");
                           Map<String, String> body = Map();
                           var url = "$BASEURL/login";
                           body["email"] = _txtEmail.text;
                           body["password"] = _txtPassword.text;
                           // try {
-                            FormData formData = new FormData.fromMap(body);
-                            var response =
-                                await Dio().post(url, data: formData);
-                            print(response.data+
-                                "    :   LOGINNNNNNNNNNNNNNNn");
-                            if (jsonDecode(response.data)['login'] == 'true') {
-                              Navigator.of(context)
-                                  .pushNamed('/Tabs', arguments: 2);
-                            } else {
-                              Fluttertoast.showToast(
-                                  msg: "LOGIN ERROR",
-                                  toastLength: Toast.LENGTH_SHORT,
-                                  gravity: ToastGravity.BOTTOM,
-                                  timeInSecForIos: 1,
-                                  backgroundColor: Colors.red,
-                                  textColor: Colors.white,
-                                  fontSize: 16.0);
-                            }
+                          FormData formData = new FormData.fromMap(body);
+                          var response = await Dio().post(url, data: formData);
+                          print(response.data + "    :   LOGINNNNNNNNNNNNNNNn");
+                          if (jsonDecode(response.data)['login'] == 'true') {
+                            final prefs = await SharedPreferences.getInstance();
+                            prefs.setString('token',
+                                  jsonDecode(response.data)['user']['token']);
+                            setState(() {
+                              TOKEN =
+                                  jsonDecode(response.data)['user']['token'];
+                              
+                              
+                            });
+
+                            Navigator.of(context)
+                                .pushReplacementNamed('/Tabs', arguments: 0);
+                          } else {
+                            Fluttertoast.showToast(
+                                msg: "LOGIN ERROR",
+                                toastLength: Toast.LENGTH_SHORT,
+                                gravity: ToastGravity.BOTTOM,
+                                timeInSecForIos: 1,
+                                backgroundColor: Colors.red,
+                                textColor: Colors.white,
+                                fontSize: 16.0);
+                          }
                           // } catch (e) {
                           //   Fluttertoast.showToast(
                           //       msg: "LOGIN ERROR",
@@ -169,20 +187,39 @@ class _SignInWidgetState extends State<SignInWidget> {
                               ),
                         ),
                         color: Theme.of(context).accentColor,
+                        //  color: Color,
                         shape: StadiumBorder(),
                       ),
-                      SizedBox(height: 50),
-                      Text(
-                        'Or using social media',
-                        style: Theme.of(context).textTheme.body1,
-                      ),
                       SizedBox(height: 20),
-                      new SocialMediaWidget()
+                      // Text(
+                      //   'Or using social media',
+                      //   style: Theme.of(context).textTheme.body1,
+                      // ),
+                      // SizedBox(height: 20),
+                      // new SocialMediaWidget(),
                     ],
                   ),
                 ),
               ],
             ),
+            //  SizedBox(height: 20),
+            FlatButton(
+              padding: EdgeInsets.symmetric(vertical: 12, horizontal: 70),
+              onPressed: () {
+                Navigator.of(context)
+                    .pushReplacementNamed('/Tabs', arguments: 0);
+              },
+              child: Text(
+                'SKIP',
+                style: Theme.of(context).textTheme.title.merge(
+                      TextStyle(color: Theme.of(context).primaryColor),
+                    ),
+              ),
+              color: Color.fromRGBO(55, 169, 157, 1),
+              shape: StadiumBorder(),
+            ),
+            SizedBox(height: 20),
+
             FlatButton(
               onPressed: () {
                 Navigator.of(context).pushNamed('/SignUp');

@@ -1,6 +1,7 @@
 import 'package:daangor/config/ui_icons.dart';
+
 import 'package:daangor/src/screens/account.dart';
-import 'package:daangor/src/screens/categoriesNW.dart';
+import 'package:daangor/src/screens/Categories.dart';
 import 'package:daangor/src/screens/chat.dart';
 import 'package:daangor/src/screens/favorites.dart';
 import 'package:daangor/src/screens/home.dart';
@@ -12,8 +13,8 @@ import 'package:flutter/material.dart';
 
 // ignore: must_be_immutable
 class TabsWidget extends StatefulWidget {
-  int currentTab = 2;
-  int selectedTab = 2;
+  int currentTab = 0;
+  int selectedTab = 0;
   String currentTitle = 'Home';
   Widget currentPage = HomeWidget();
 
@@ -48,37 +49,25 @@ class _TabsWidgetState extends State<TabsWidget> {
       widget.selectedTab = tabItem;
       switch (tabItem) {
         case 0:
-         widget.currentTitle = 'Home';
+          widget.currentTitle = 'Home';
           widget.currentPage = HomeWidget();
           break;
         case 3:
           widget.currentTitle = 'Account';
           widget.currentPage = AccountWidget();
           break;
-        case 4:
-        widget.currentTitle = 'Notifications';
-          widget.currentPage = NotificationsWidget();
-          break;
-         
+
         case 1:
           widget.currentTitle = 'Category';
-          widget.currentPage = CategoriesNew();
+          widget.currentPage = CategoriesWidget();
           break;
         case 2:
           widget.currentTitle = 'Favorites';
           widget.currentPage = FavoritesWidget();
           break;
-        // case 5:
-        //   widget.selectedTab = 3;
-        //   widget.currentTitle = 'Chat';
-        //   widget.currentPage = ChatWidget();
-        //   break;
-        case 6:
-          widget.selectedTab = 3;
-          widget.currentTitle = 'Categories';
-          widget.currentPage = CategoriesNew();
-          break;
+
         default:
+          widget.currentTab = 1;
           widget.selectedTab = 1;
           widget.currentTitle = 'Home';
           widget.currentPage = HomeWidget();
@@ -91,7 +80,7 @@ class _TabsWidgetState extends State<TabsWidget> {
     return Scaffold(
       key: _scaffoldKey,
       drawer: DrawerWidget(),
-      endDrawer: FilterWidget(),
+      // endDrawer: FilterWidget(),
       appBar: AppBar(
         automaticallyImplyLeading: false,
         leading: new IconButton(
@@ -100,27 +89,43 @@ class _TabsWidgetState extends State<TabsWidget> {
         ),
         backgroundColor: Colors.transparent,
         elevation: 0,
-        title: Text(
-          widget.currentTitle,
-          style: Theme.of(context).textTheme.display1,
+        title: Row(
+          children: <Widget>[
+            Text(
+              widget.currentTitle,
+              style: Theme.of(context).textTheme.display1,
+            ),
+            SizedBox(width: 20,),
+            Image.asset("img/dark_logo.png", width: 100,)
+          ],
         ),
         actions: <Widget>[
-          Container(
-              width: 30,
-              height: 30,
-              margin: EdgeInsets.only(top: 12.5, bottom: 12.5, right: 20),
-              child: InkWell(
-                borderRadius: BorderRadius.circular(300),
-                onTap: () {
-                  Navigator.of(context).pushNamed('/Tabs', arguments: 1);
-                },
-                child: CircleAvatar(
-                  backgroundImage: AssetImage('img/user2.jpg'),
-                ),
-              )),
+          // Container(
+          //     width: 30,
+          //     height: 30,
+          //     margin: EdgeInsets.only(top: 12.5, bottom: 12.5, right: 20),
+          //     child: InkWell(
+          //       borderRadius: BorderRadius.circular(300),
+          //       onTap: () {
+          //         Navigator.of(context).pushNamed('/Tabs', arguments: 1);
+          //       },
+          //       child: CircleAvatar(
+          //         backgroundImage: AssetImage('img/user2.jpg'),
+          //       ),
+          //     )),
         ],
       ),
-      body: widget.currentPage,
+      body: Stack(
+        children: <Widget>[
+         
+          Container(
+            child: widget.currentPage,
+            width: MediaQuery.of(context).size.width,
+            height: MediaQuery.of(context).size.height,
+          ),
+          //  Positioned(child: Image.asset("img/dark_logo.png", width: 100,) ,top: 0,),
+        ],
+      ),
       bottomNavigationBar: BottomNavigationBar(
         type: BottomNavigationBarType.fixed,
         selectedItemColor: Theme.of(context).accentColor,
@@ -133,40 +138,45 @@ class _TabsWidgetState extends State<TabsWidget> {
         unselectedItemColor: Theme.of(context).hintColor.withOpacity(1),
         currentIndex: widget.selectedTab,
         onTap: (int i) {
+          widget.selectedTab = i;
           this._selectTab(i);
         },
         // this will be set when a new tab is tapped
         items: [
+          // BottomNavigationBarItem(
+          //     title: new Container(height: 5.0),
+          //     icon: Container(
+          //       width: 45,
+          //       height: 45,
+          //       decoration: BoxDecoration(
+          //         color: Theme.of(context).accentColor.withOpacity(0.8),
+          //         borderRadius: BorderRadius.all(
+          //           Radius.circular(50),
+          //         ),
+          //         boxShadow: [
+          //           BoxShadow(
+          //               color: Theme.of(context).accentColor.withOpacity(0.4),
+          //               blurRadius: 40,
+          //               offset: Offset(0, 15)),
+          //           BoxShadow(
+          //               color: Theme.of(context).accentColor.withOpacity(0.4),
+          //               blurRadius: 13,
+          //               offset: Offset(0, 3))
+          //         ],
+          //       ),
+          //       child: new Icon(UiIcons.home,
+          //           color: Theme.of(context).primaryColor),
+          //     )),
           BottomNavigationBarItem(
-              title: new Container(height: 5.0),
-              icon: Container(
-                width: 45,
-                height: 45,
-                decoration: BoxDecoration(
-                  color: Theme.of(context).accentColor.withOpacity(0.8),
-                  borderRadius: BorderRadius.all(
-                    Radius.circular(50),
-                  ),
-                  boxShadow: [
-                    BoxShadow(
-                        color: Theme.of(context).accentColor.withOpacity(0.4),
-                        blurRadius: 40,
-                        offset: Offset(0, 15)),
-                    BoxShadow(
-                        color: Theme.of(context).accentColor.withOpacity(0.4),
-                        blurRadius: 13,
-                        offset: Offset(0, 3))
-                  ],
-                ),
-                child: new Icon(UiIcons.home,
-                    color: Theme.of(context).primaryColor),
-              )),
-          BottomNavigationBarItem(
-            icon: Icon(UiIcons.folder_1),
+            icon: Icon(UiIcons.home),
             title: new Container(height: 0.0),
           ),
-         
-          
+          BottomNavigationBarItem(
+            icon: Icon(UiIcons.folder_1),
+            // icon: ImageIcon(AssetImage("img/driver.png")),
+            title: new Container(height: 0.0),
+          ),
+
           // BottomNavigationBarItem(
           //   icon: new Icon(UiIcons.chat),
           //   title: new Container(height: 0.0),
@@ -175,7 +185,7 @@ class _TabsWidgetState extends State<TabsWidget> {
             icon: new Icon(UiIcons.heart),
             title: new Container(height: 0.0),
           ),
-           BottomNavigationBarItem(
+          BottomNavigationBarItem(
             icon: Icon(UiIcons.user_1),
             title: new Container(height: 0.0),
           ),
@@ -184,3 +194,5 @@ class _TabsWidgetState extends State<TabsWidget> {
     );
   }
 }
+
+//  Navigator.of(context).pushNamed('/Categories');

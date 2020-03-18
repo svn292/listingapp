@@ -1,8 +1,14 @@
+import 'dart:convert';
+
 import 'package:daangor/config/ui_icons.dart';
 import 'package:daangor/src/models/category.dart';
+import 'package:daangor/src/models/listing.dart';
 import 'package:daangor/src/models/utilities.dart';
+import 'package:daangor/src/util/constants.dart';
 import 'package:daangor/src/widgets/PopularLocationCarouselWidget.dart';
+import 'package:dio/dio.dart';
 import 'package:flutter/material.dart';
+
 // ignore: must_be_immutable
 class BrandHomeTabWidget extends StatefulWidget {
   Category category;
@@ -15,6 +21,36 @@ class BrandHomeTabWidget extends StatefulWidget {
 }
 
 class _BrandHomeTabWidgetState extends State<BrandHomeTabWidget> {
+  List<ListingItem> listingItems = List();
+  getPopularList() async {
+    var response = await Dio().get("$BASEURL/popular_listing");
+    print("MMMMMMMMM   ::   " + response.data);
+
+    var data = jsonDecode(response.data);
+    setState(() {
+      listingItems.clear();
+      for (Map dt in data) {
+        listingItems.add(ListingItem(
+            dt['code'],
+            dt['name'],
+            dt['listing_type'],
+            dt['listing_cover'] == null
+                ? "https://daangor.com/uploads/listing_thumbnails/thumbnail.png"
+                : CAT_TUMB_BASE_URL + dt['listing_cover'],
+            dt['description'],
+                   dt['category'][0],
+                  dt['address'],
+                  dt['phone']));
+      }
+    });
+  }
+
+  @override
+  void initState() {
+    getPopularList();
+    super.initState();
+  }
+
   @override
   Widget build(BuildContext context) {
     return Column(
@@ -29,7 +65,7 @@ class _BrandHomeTabWidgetState extends State<BrandHomeTabWidget> {
             ),
           ),
         ),*/
-        Padding( 
+        Padding(
           padding: const EdgeInsets.only(left: 20, right: 20, top: 15),
           child: ListTile(
             dense: true,
@@ -64,7 +100,10 @@ class _BrandHomeTabWidgetState extends State<BrandHomeTabWidget> {
             ),
           ),
         ),
-        PopularLocationCarouselWidget(heroTag: 'brand_featured_products', utilitiesList: widget._utilitiesList.popularList),
+        PopularLocationCarouselWidget(
+          heroTag: 'brand_featured_products',
+          listingList: listingItems,
+        ),
       ],
     );
   }

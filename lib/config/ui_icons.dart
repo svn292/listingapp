@@ -161,4 +161,12 @@ class UiIcons {
   static const IconData baby_changing = const IconData(0xe8d7, fontFamily: _kFontFam);
   static const IconData bakery = const IconData(0xe8d8, fontFamily: _kFontFam);
   static const IconData bedroom = const IconData(0xe8d9, fontFamily: _kFontFam);
+
+
+  static const IconData construction = const IconData(0xe900, fontFamily: "IconMoon");
+  static const IconData driver = const IconData(0xe901, fontFamily: "IconMoon");
+  static const IconData education = const IconData(0xe902, fontFamily: "IconMoon");
+  static const IconData marriage = const IconData(0xe903, fontFamily: "IconMoon");
+  static const IconData staffhiring = const IconData(0xe906, fontFamily: "IconMoon");
+  static const IconData transportation = const IconData(0xe905, fontFamily: "IconMoon");
 }

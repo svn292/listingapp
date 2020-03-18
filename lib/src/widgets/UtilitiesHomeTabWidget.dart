@@ -1,20 +1,28 @@
 import 'package:daangor/config/ui_icons.dart';
+import 'package:daangor/src/models/listing.dart';
 import 'package:daangor/src/models/product_color.dart';
 import 'package:daangor/src/widgets/PopularLocationCarouselWidget.dart';
 import 'package:flutter/material.dart';
 import 'package:daangor/src/models/utilities.dart';
+
 // ignore: must_be_immutable
 class UtilitieHomeTabWidget extends StatefulWidget {
-  Utilitie utilitie;
-  UtilitiesList _productsList = new UtilitiesList();
+  ListingItem listingItem;
+  // UtilitiesList _productsList = new UtilitiesList();
 
-  UtilitieHomeTabWidget({this.utilitie});
+  UtilitieHomeTabWidget(this.listingItem);
 
   @override
   UtilitieHomeTabWidgetState createState() => UtilitieHomeTabWidgetState();
 }
 
 class UtilitieHomeTabWidgetState extends State<UtilitieHomeTabWidget> {
+  @override
+  void initState() {
+    print("AAAAAAAAAAAA   " + widget.listingItem.code);
+    super.initState();
+  }
+
   @override
   Widget build(BuildContext context) {
     return Column(
@@ -28,31 +36,33 @@ class UtilitieHomeTabWidgetState extends State<UtilitieHomeTabWidget> {
             children: <Widget>[
               Expanded(
                 child: Text(
-                  widget.utilitie.name,
+                  widget.listingItem.name == null
+                      ? ""
+                      : widget.listingItem.name,
                   overflow: TextOverflow.ellipsis,
                   maxLines: 2,
                   style: Theme.of(context).textTheme.display2,
                 ),
               ),
-              Chip(
-                padding: EdgeInsets.all(0),
-                label: Row(
-                  mainAxisAlignment: MainAxisAlignment.start,
-                  children: <Widget>[
-                    Text(widget.utilitie.rate.toString(),
-                        style:
-                            Theme.of(context).textTheme.body2.merge(TextStyle(color: Theme.of(context).primaryColor))),
-                    SizedBox(width: 4),
-                    Icon(
-                      Icons.star_border,
-                      color: Theme.of(context).primaryColor,
-                      size: 16,
-                    ),
-                  ],
-                ),
-                backgroundColor: Theme.of(context).accentColor.withOpacity(0.9),
-                shape: StadiumBorder(),
-              ),
+              // Chip(
+              //   padding: EdgeInsets.all(0),
+              //   label: Row(
+              //     mainAxisAlignment: MainAxisAlignment.start,
+              //     children: <Widget>[
+              //       Text(widget.utilitie.rate.toString(),
+              //           style: Theme.of(context).textTheme.body2.merge(
+              //               TextStyle(color: Theme.of(context).primaryColor))),
+              //       SizedBox(width: 4),
+              //       Icon(
+              //         Icons.star_border,
+              //         color: Theme.of(context).primaryColor,
+              //         size: 16,
+              //       ),
+              //     ],
+              //   ),
+              //   backgroundColor: Theme.of(context).accentColor.withOpacity(0.9),
+              //   shape: StadiumBorder(),
+              // ),
             ],
           ),
         ),
@@ -63,11 +73,12 @@ class UtilitieHomeTabWidgetState extends State<UtilitieHomeTabWidget> {
             children: <Widget>[
               Expanded(
                 child: Text(
-                  widget.utilitie.type,
-                  overflow: TextOverflow.ellipsis,
-                  maxLines: 2,
-                  style: Theme.of(context).textTheme.body2
-                ),
+                    widget.listingItem.category == null
+                        ? ""
+                        : widget.listingItem.category,
+                    overflow: TextOverflow.ellipsis,
+                    maxLines: 2,
+                    style: Theme.of(context).textTheme.body2),
               ),
             ],
           ),
@@ -85,52 +96,66 @@ class UtilitieHomeTabWidgetState extends State<UtilitieHomeTabWidget> {
                   color: Theme.of(context).hintColor,
                 ),
                 title: Text(
-                  'Description',
+                  'ABOUT',
                   style: Theme.of(context).textTheme.display1,
                 ),
               ),
             ),
             Padding(
               padding: const EdgeInsets.symmetric(horizontal: 20, vertical: 8),
-              child: Text(
-                   'We’re all going somewhere. And whether it’s the podcast blaring from your headphones as you walk down the street or the essay that encourages you to take on that big project, there’s a real joy in getting lost in the kind of story that feels like a destination unto itself.'),
+              child: Text(widget.listingItem.description == null
+                  ? ""
+                  : widget.listingItem.description),
             ),
+            Padding(
+              padding: const EdgeInsets.symmetric(horizontal: 20, vertical: 8),
+              child: Text(
+                "PHONE NO :  ${widget.listingItem.phone == null ? '' : widget.listingItem.phone}",
+                style: Theme.of(context).textTheme.display2,
+              ),
+            ),
+            Padding(
+              padding: const EdgeInsets.symmetric(horizontal: 20, vertical: 8),
+              child: Text(
+                "ADDRESS :  ${widget.listingItem.address == null ? '' : widget.listingItem.address}",
+                style: Theme.of(context).textTheme.display2,
+              ),
+            )
           ],
         ),
-        Padding(
-          padding: const EdgeInsets.symmetric(horizontal: 20, vertical: 8),
-          child: SizedBox(
-            height: 180,
-            width: double.maxFinite,
-            child: Container(
-              decoration: BoxDecoration(
-                borderRadius: BorderRadius.circular(6.0),
-                image:DecorationImage(
-                  image:AssetImage('img/gps.png'),
-                  fit: BoxFit.cover,
-                )
-              ),
-             ),
-          ),
-        ),
-        
-        Padding(
-          padding: const EdgeInsets.symmetric(horizontal: 20, vertical: 8),
-          child: ListTile(
-            dense: true,
-            contentPadding: EdgeInsets.symmetric(vertical: 0),
-            leading: Icon(
-              UiIcons.box,
-              color: Theme.of(context).hintColor,
-            ),
-            title: Text(
-              'Related',
-              style: Theme.of(context).textTheme.display1,
-            ),
-          ),
-        ),
-        PopularLocationCarouselWidget(
-            heroTag: 'product_related_products', utilitiesList: widget._productsList.popularList),
+        // Padding(
+        //   padding: const EdgeInsets.symmetric(horizontal: 20, vertical: 8),
+        //   child: SizedBox(
+        //     height: 180,
+        //     width: double.maxFinite,
+        //     child: Container(
+        //       decoration: BoxDecoration(
+        //           borderRadius: BorderRadius.circular(6.0),
+        //           image: DecorationImage(
+        //             image: AssetImage('img/gps.png'),
+        //             fit: BoxFit.cover,
+        //           )),
+        //     ),
+        //   ),
+        // ),
+
+        // Padding(
+        //   padding: const EdgeInsets.symmetric(horizontal: 20, vertical: 8),
+        //   child: ListTile(
+        //     dense: true,
+        //     contentPadding: EdgeInsets.symmetric(vertical: 0),
+        //     leading: Icon(
+        //       UiIcons.box,
+        //       color: Theme.of(context).hintColor,
+        //     ),
+        //     title: Text(
+        //       'Related',
+        //       style: Theme.of(context).textTheme.display1,
+        //     ),
+        //   ),
+        // ),
+        // PopularLocationCarouselWidget(
+        //     heroTag: 'product_related_products', utilitiesList: widget._productsList.popularList),
       ],
     );
   }
@@ -181,6 +206,3 @@ class _SelectColorWidgetState extends State<SelectColorWidget> {
     );
   }
 }
-
-
-

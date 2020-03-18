@@ -1,14 +1,15 @@
+import 'package:daangor/src/models/listing.dart';
 import 'package:daangor/src/models/utilities.dart';
 import 'package:daangor/src/widgets/PopularLocationCarouselItemWidget.dart';
 import 'package:flutter/material.dart';
 
 class PopularLocationCarouselWidget extends StatelessWidget {
-  List<Utilitie> utilitiesList;
+  List<ListingItem> listingList;
   String heroTag;
 
   PopularLocationCarouselWidget({
     Key key,
-    this.utilitiesList,
+    this.listingList,
     this.heroTag,
   }) : super(key: key);
 
@@ -18,14 +19,14 @@ class PopularLocationCarouselWidget extends StatelessWidget {
         height: 230,
         margin: EdgeInsets.only(top: 10),
         child: ListView.builder(
-          itemCount: utilitiesList.length,
+          itemCount: listingList.length,
           itemBuilder: (context, index) {
             double _marginLeft = 0;
             (index == 0) ? _marginLeft = 20 : _marginLeft = 0;
             return PopularLocationCarouselItemWidget(
               heroTag: this.heroTag,
               marginLeft: _marginLeft,
-              utilitie: utilitiesList.elementAt(index),
+              listingItem: listingList.elementAt(index),
             );
           },
           scrollDirection: Axis.horizontal,

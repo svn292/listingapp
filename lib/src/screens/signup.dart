@@ -261,7 +261,7 @@ class _SignUpWidgetState extends State<SignUpWidget> {
                                 await Dio().post(url, data: formData);
                             print(jsonDecode(response.data)['signup']  +  "    :   SIGNUPPPPPPPP");
                             if (jsonDecode(response.data)['signup'] == 'true') {
-                              Navigator.of(context).pushNamed('/SignIn');
+                              Navigator.of(context).pushReplacementNamed('/SignIn');
                             } else {
                               Fluttertoast.showToast(
                                   msg: "SIGNUP ERROR",
@@ -293,13 +293,13 @@ class _SignUpWidgetState extends State<SignUpWidget> {
                         color: Theme.of(context).accentColor,
                         shape: StadiumBorder(),
                       ),
-                      SizedBox(height: 50),
-                      Text(
-                        'Or using social media',
-                        style: Theme.of(context).textTheme.body1,
-                      ),
                       SizedBox(height: 20),
-                      new SocialMediaWidget()
+                      // Text(
+                      //   'Or using social media',
+                      //   style: Theme.of(context).textTheme.body1,
+                      // ),
+                      // SizedBox(height: 20),
+                      // new SocialMediaWidget()
                     ],
                   ),
                 ),

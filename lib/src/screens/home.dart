@@ -2,6 +2,7 @@ import 'dart:convert';
 
 import 'package:daangor/config/ui_icons.dart';
 import 'package:daangor/src/models/category.dart';
+import 'package:daangor/src/models/listing.dart';
 import 'package:daangor/src/models/utilities.dart';
 import 'package:daangor/src/util/constants.dart';
 import 'package:daangor/src/widgets/CategoriesIconsContainerWidget.dart';
@@ -24,6 +25,34 @@ class HomeWidget extends StatefulWidget {
 
 class _HomeWidgetState extends State<HomeWidget>
     with SingleTickerProviderStateMixin {
+  List<ListingItem> listingItems = List();
+  getPopularList() async {
+    var response = await Dio().get("$BASEURL/popular_listing");
+    print("MMMMMMMMM   ::   " + response.data);
+
+    var data = jsonDecode(response.data);
+    if (this.mounted) {
+      
+      setState(() {
+        listingItems.clear();
+        for (Map dt in data) {
+          print("AAAAAAAAAA  :  " + dt['category'][0]);
+          listingItems.add(ListingItem(
+              dt['code'],
+              dt['name'],
+              dt['listing_type'],
+              dt['listing_cover'] == null
+                  ? "https://daangor.com/uploads/listing_thumbnails/thumbnail.png"
+                  : CAT_TUMB_BASE_URL + dt['listing_cover'],
+              dt['description'],
+                   dt['category'][0],
+                  dt['address'],
+                  dt['phone']));
+        }
+      });
+    }
+  }
+
   getCategoryList() async {
     List categories = List();
     try {
@@ -44,7 +73,9 @@ class _HomeWidgetState extends State<HomeWidget>
 
   @override
   void initState() {
+    // print("LLLLLLLLLLLLLLLLLLLLL   :   " + TOKEN);
     getCategoryList();
+    getPopularList();
     animationController =
         AnimationController(duration: Duration(milliseconds: 200), vsync: this);
     CurvedAnimation curve =
@@ -105,8 +136,7 @@ class _HomeWidgetState extends State<HomeWidget>
               ],
             )),
         PopularLocationCarouselWidget(
-            heroTag: 'home_flash_sales',
-            utilitiesList: _utilitiesList.popularList),
+            heroTag: 'home_flash_sales', listingList: listingItems),
 
         //   Padding(
         //     padding: const EdgeInsets.symmetric(horizontal: 20, vertical: 8),

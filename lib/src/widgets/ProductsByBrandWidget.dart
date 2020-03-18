@@ -5,7 +5,13 @@ import 'package:daangor/src/widgets/FavoriteListItemWidget.dart';
 import 'package:daangor/src/widgets/UtilitiesGridItemWidget.dart';
 import 'package:daangor/src/widgets/SearchBarWidget.dart';
 import 'package:flutter/material.dart';
+import 'package:dio/dio.dart';
+import 'package:daangor/src/util/constants.dart';
+import 'dart:convert';
+
 import 'package:flutter_staggered_grid_view/flutter_staggered_grid_view.dart';
+import 'package:daangor/src/models/listing.dart';
+
 // ignore: must_be_immutable
 class UtilitiesByBrandWidget extends StatefulWidget {
   Category category;
@@ -18,6 +24,43 @@ class UtilitiesByBrandWidget extends StatefulWidget {
 
 class _UtilitiesByBrandWidgetState extends State<UtilitiesByBrandWidget> {
   String layout = 'grid';
+  List<ListingItem> listingItems = List();
+  getWishList() async {
+    Dio dio = Dio();
+    if (TOKEN != null && TOKEN != "") {
+      dio.options.headers["authorization"] = TOKEN;
+      var url = "$BASEURL/getuser";
+      var response = await dio.get(url);
+      print("MMMMMMMMM   ::   " + response.data);
+
+      var data = jsonDecode(response.data);
+      if (this.mounted) {
+        setState(() {
+          listingItems.clear();
+          for (Map dt in data) {
+            listingItems.add(ListingItem(
+                dt['code'],
+                dt['name'],
+                dt['listing_type'],
+                dt['listing_cover'] == null
+                    ? "https://daangor.com/uploads/listing_thumbnails/thumbnail.png"
+                    : CAT_TUMB_BASE_URL + dt['listing_cover'],
+                dt['description'],
+                   dt['category'][0],
+                  dt['address'],
+                  dt['phone']));
+          }
+        });
+      }
+    }
+  }
+
+  @override
+  void initState() {
+    getWishList();
+    super.initState();
+  }
+
   @override
   Widget build(BuildContext context) {
     return Wrap(
@@ -52,7 +95,9 @@ class _UtilitiesByBrandWidgetState extends State<UtilitiesByBrandWidget> {
                   },
                   icon: Icon(
                     Icons.format_list_bulleted,
-                    color: this.layout == 'list' ? Theme.of(context).focusColor : Theme.of(context).focusColor.withOpacity(0.4),
+                    color: this.layout == 'list'
+                        ? Theme.of(context).focusColor
+                        : Theme.of(context).focusColor.withOpacity(0.4),
                   ),
                 ),
                 IconButton(
@@ -63,7 +108,9 @@ class _UtilitiesByBrandWidgetState extends State<UtilitiesByBrandWidget> {
                   },
                   icon: Icon(
                     Icons.apps,
-                    color: this.layout == 'grid' ? Theme.of(context).focusColor : Theme.of(context).focusColor.withOpacity(0.4),
+                    color: this.layout == 'grid'
+                        ? Theme.of(context).focusColor
+                        : Theme.of(context).focusColor.withOpacity(0.4),
                   ),
                 )
               ],
@@ -83,7 +130,7 @@ class _UtilitiesByBrandWidgetState extends State<UtilitiesByBrandWidget> {
             itemBuilder: (context, index) {
               return FavoriteListItemWidget(
                 heroTag: 'Utilities_by_category_list',
-                utilitie: widget.category.utilities.elementAt(index),
+                listingItem: listingItems.elementAt(index),
                 onDismissed: () {
                   setState(() {
                     widget.category.utilities.removeAt(index);
@@ -105,7 +152,7 @@ class _UtilitiesByBrandWidgetState extends State<UtilitiesByBrandWidget> {
               itemBuilder: (BuildContext context, int index) {
                 Utilitie utilitie = widget.category.utilities.elementAt(index);
                 return UtilitietGridItemWidget(
-                  utilitie: utilitie,
+                  listingItem: listingItems.elementAt(index),
                   heroTag: 'Utilities_by_category_grid',
                 );
               },

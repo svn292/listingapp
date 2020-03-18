@@ -1,36 +1,91 @@
 import 'package:daangor/config/ui_icons.dart';
-import 'package:daangor/src/models/user.dart';
 import 'package:flutter/material.dart';
+import 'package:dio/dio.dart';
+import 'package:daangor/src/models/userNW.dart';
+import 'dart:convert';
+import 'package:daangor/src/util/constants.dart';
+import 'package:shared_preferences/shared_preferences.dart';
+
 // ignore: must_be_immutable
-class DrawerWidget extends StatelessWidget {
-  User _user = new User.init().getCurrentUser();
+class DrawerWidget extends StatefulWidget {
+  // User _user = new User.init().getCurrentUser();
+  @override
+  _DrawerWidgetState createState() => _DrawerWidgetState();
+}
+
+class _DrawerWidgetState extends State<DrawerWidget> {
+  UserModel _user;
+
+  getUserDetails() async {
+    Dio dio = Dio();
+    if (TOKEN != null && TOKEN != "") {
+      dio.options.headers["authorization"] = TOKEN;
+      var url = "$BASEURL/getuser";
+      var userresponse = await dio.get(url);
+      print(userresponse.data);
+      setState(() {
+        _user = UserModel(
+            jsonDecode(userresponse.data)['name'],
+            jsonDecode(userresponse.data)['email'],
+            jsonDecode(userresponse.data)['address'],
+            jsonDecode(userresponse.data)['phone']);
+      });
+    }
+  }
+
+  @override
+  void initState() {
+    getUserDetails();
+    super.initState();
+  }
+
   @override
   Widget build(BuildContext context) {
     return Drawer(
       child: ListView(
         children: <Widget>[
-          GestureDetector(
-            onTap: () {
-              Navigator.of(context).pushNamed('/Tabs', arguments: 1);
-            },
-            child: UserAccountsDrawerHeader(
-              decoration: BoxDecoration(
-                color: Theme.of(context).hintColor.withOpacity(0.1),
-              ),
-              accountName: Text(
-                _user.name,
-                style: Theme.of(context).textTheme.title,
-              ),
-              accountEmail: Text(
-                _user.email,
-                style: Theme.of(context).textTheme.caption,
-              ),
-              currentAccountPicture: CircleAvatar(
-                backgroundColor: Theme.of(context).accentColor,
-                backgroundImage: AssetImage(_user.avatar),
-              ),
-            ),
-          ),
+          (TOKEN == null || TOKEN == "")
+              ? Container(
+                  child: Center(
+                    child: FlatButton(
+                      padding:
+                          EdgeInsets.symmetric(vertical: 12, horizontal: 70),
+                      onPressed: () {
+                        Navigator.of(context).pushNamed('/SignIn');
+                      },
+                      child: Text(
+                        'SIGN IN',
+                        style: Theme.of(context).textTheme.title.merge(
+                              TextStyle(color: Theme.of(context).primaryColor),
+                            ),
+                      ),
+                      color: Theme.of(context).accentColor,
+                      shape: StadiumBorder(),
+                    ),
+                  ),
+                )
+              : GestureDetector(
+                  onTap: () {
+                    Navigator.of(context).pushNamed('/Tabs', arguments: 1);
+                  },
+                  child: UserAccountsDrawerHeader(
+                    decoration: BoxDecoration(
+                      color: Theme.of(context).hintColor.withOpacity(0.1),
+                    ),
+                    accountName: Text(
+                      _user == null ? "" : _user.name,
+                      style: Theme.of(context).textTheme.title,
+                    ),
+                    accountEmail: Text(
+                      _user == null ? "" : _user.email,
+                      style: Theme.of(context).textTheme.caption,
+                    ),
+                    currentAccountPicture: CircleAvatar(
+                      backgroundColor: Theme.of(context).accentColor,
+                      backgroundImage: AssetImage("img/user0.jpg"),
+                    ),
+                  ),
+                ),
           ListTile(
             onTap: () {
               Navigator.of(context).pushNamed('/Tabs', arguments: 0);
@@ -72,7 +127,7 @@ class DrawerWidget extends StatelessWidget {
           ),
           ListTile(
             onTap: () {
-              Navigator.of(context).pushNamed('/Categories');
+              Navigator.of(context).pushNamed('/Tabs', arguments: 1);
             },
             leading: Icon(
               UiIcons.folder_1,
@@ -83,7 +138,7 @@ class DrawerWidget extends StatelessWidget {
               style: Theme.of(context).textTheme.subhead,
             ),
           ),
-    
+
           ListTile(
             onTap: () {
               Navigator.of(context).pushNamed('/Tabs', arguments: 3);
@@ -110,19 +165,27 @@ class DrawerWidget extends StatelessWidget {
           //     style: Theme.of(context).textTheme.subhead,
           //   ),
           // ),
-          ListTile(
-            onTap: () {
-              Navigator.of(context).pushNamed('/SignIn');
-            },
-            leading: Icon(
-              UiIcons.upload,
-              color: Theme.of(context).focusColor.withOpacity(1),
-            ),
-            title: Text(
-              "Log out",
-              style: Theme.of(context).textTheme.subhead,
-            ),
-          ),
+          (TOKEN == null || TOKEN == "")
+              ? Container()
+              : ListTile(
+                  onTap: () async{
+                     final prefs = await SharedPreferences.getInstance();
+                            prefs.setString('token',
+                                  "");
+                    setState(() {
+                      TOKEN="";
+                    });
+                    Navigator.of(context).pushReplacementNamed('/SignIn');
+                  },
+                  leading: Icon(
+                    UiIcons.upload,
+                    color: Theme.of(context).focusColor.withOpacity(1),
+                  ),
+                  title: Text(
+                    "Log out",
+                    style: Theme.of(context).textTheme.subhead,
+                  ),
+                ),
           /*ListTile(
             dense: true,
             title: Text(

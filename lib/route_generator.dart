@@ -31,14 +31,13 @@ class RouteGenerator {
                   currentTab: args,
                 ));
       case '/Utilities':
-        return MaterialPageRoute(
-            builder: (_) => UtilitieWidget(
-                  routeArgument: args as RouteArgument,
-                ));
+        return MaterialPageRoute(builder: (_) => UtilitieWidget(args));
       case '/Languages':
         return MaterialPageRoute(builder: (_) => LanguagesWidget());
       case '/Categories':
         return MaterialPageRoute(builder: (_) => CategoriesWidget());
+      case '/CategoriesItem':
+        return MaterialPageRoute(builder: (_) => CategoriesNew(args));
       case '/Categorie':
         return MaterialPageRoute(builder: (_) => FavoritesWidget());
       // case '/Categorie':

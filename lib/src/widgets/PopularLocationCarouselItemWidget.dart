@@ -1,26 +1,28 @@
+import 'package:daangor/src/models/listing.dart';
 import 'package:daangor/src/models/utilities.dart';
 import 'package:daangor/src/models/route_argument.dart';
 //import 'package:daangor/src/widgets/AvailableProgressBarWidget.dart';
 import 'package:flutter/material.dart';
+
 // ignore: must_be_immutable
 class PopularLocationCarouselItemWidget extends StatelessWidget {
   String heroTag;
   double marginLeft;
-  Utilitie utilitie;
+  ListingItem listingItem;
 
   PopularLocationCarouselItemWidget({
     Key key,
     this.heroTag,
     this.marginLeft,
-    this.utilitie,
+    this.listingItem,
   }) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
     return InkWell(
       onTap: () {
-        Navigator.of(context)
-            .pushNamed('/Utilities', arguments: new RouteArgument(id: utilitie.id, argumentsList: [utilitie, heroTag]));
+          Navigator.of(context).pushNamed('/Utilities', arguments: listingItem);
+      
       },
       child: Container(
         margin: EdgeInsets.only(left: this.marginLeft, right: 20),
@@ -28,7 +30,7 @@ class PopularLocationCarouselItemWidget extends StatelessWidget {
           alignment: AlignmentDirectional.topCenter,
           children: <Widget>[
             Hero(
-              tag: heroTag + utilitie.id,
+              tag: heroTag + listingItem.hashCode.toString(),
               child: Container(
                 width: 180,
                 height: 185,
@@ -36,7 +38,7 @@ class PopularLocationCarouselItemWidget extends StatelessWidget {
                   borderRadius: BorderRadius.circular(6),
                   image: DecorationImage(
                     fit: BoxFit.cover,
-                    image: AssetImage(utilitie.image),
+                    image: NetworkImage(listingItem.imgUrl),
                   ),
                 ),
               ),
@@ -46,26 +48,28 @@ class PopularLocationCarouselItemWidget extends StatelessWidget {
               width: 140,
               height: 50,
               decoration: BoxDecoration(
-                color: Theme.of(context).primaryColor,
-                borderRadius: BorderRadius.circular(6),
-                boxShadow: [
-                  BoxShadow(
-                      color: Theme.of(context).hintColor.withOpacity(0.15), offset: Offset(0, 3), blurRadius: 10)
-                ]),
+                  color: Theme.of(context).primaryColor,
+                  borderRadius: BorderRadius.circular(6),
+                  boxShadow: [
+                    BoxShadow(
+                        color: Theme.of(context).hintColor.withOpacity(0.15),
+                        offset: Offset(0, 3),
+                        blurRadius: 10)
+                  ]),
               child: Center(
-                child:Text(
-                  utilitie.name,
+                child: Text(
+                  listingItem.name == null ? "" : listingItem.name,
                   style: Theme.of(context).textTheme.body2,
                   maxLines: 1,
                   softWrap: false,
                   overflow: TextOverflow.fade,
                 ),
-                  //SizedBox(height: 7),
-                  //Text(
-                    //'${utilitie.available} Available',
-                    //style: Theme.of(context).textTheme.body1,
-                    //overflow: TextOverflow.ellipsis,
-                  //),
+                //SizedBox(height: 7),
+                //Text(
+                //'${utilitie.available} Available',
+                //style: Theme.of(context).textTheme.body1,
+                //overflow: TextOverflow.ellipsis,
+                //),
               ),
             )
           ],

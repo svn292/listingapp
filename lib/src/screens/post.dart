@@ -11,8 +11,11 @@ import 'package:flutter/material.dart';
 class UtilitieWidget extends StatefulWidget {
   // RouteArgument routeArgument;
   ListingItem listingItem;
+  // Utilitie _utilitie;
   // String _heroTag;
+
   UtilitieWidget(this.listingItem);
+
   // UtilitieWidget({Key key, this.routeArgument}) {
   //   _utilitie = this.routeArgument.argumentsList[0] as Utilitie;
   //   _heroTag = this.routeArgument.argumentsList[1] as String;
@@ -30,7 +33,6 @@ class _UtilitieWidgetState extends State<UtilitieWidget>
 
   @override
   void initState() {
-    print("IIIIIIIIIIIIIIINN    ::  "+widget.listingItem.code);
     _tabController =
         TabController(length: 2, initialIndex: _tabIndex, vsync: this);
     _tabController.addListener(_handleTabSelection);
@@ -63,7 +65,6 @@ class _UtilitieWidgetState extends State<UtilitieWidget>
       ),
       body: CustomScrollView(slivers: <Widget>[
         SliverAppBar(
-          title:  Center(child: Image.asset("img/dark_logo.png", width: 100,)),
           floating: true,
           automaticallyImplyLeading: false,
           leading: new IconButton(
@@ -94,7 +95,7 @@ class _UtilitieWidgetState extends State<UtilitieWidget>
           flexibleSpace: FlexibleSpaceBar(
             collapseMode: CollapseMode.parallax,
             background: Hero(
-              tag: widget.listingItem.code,
+              tag: "",
               child: Stack(
                 fit: StackFit.expand,
                 children: <Widget>[
@@ -104,7 +105,7 @@ class _UtilitieWidgetState extends State<UtilitieWidget>
                     decoration: BoxDecoration(
                       image: DecorationImage(
                         fit: BoxFit.cover,
-                        image: NetworkImage(widget.listingItem.imgUrl),
+                        image: AssetImage("img/brazil.png"),
                       ),
                     ),
                   ),
@@ -163,7 +164,7 @@ class _UtilitieWidgetState extends State<UtilitieWidget>
                     ),
                     child: Align(
                       alignment: Alignment.center,
-                      child: Text("Contact"),
+                      child: Text("Review"),
                     ),
                   ),
                 ),
@@ -194,15 +195,14 @@ class _UtilitieWidgetState extends State<UtilitieWidget>
                         color: Theme.of(context).hintColor,
                       ),
                       title: Text(
-                        'Contact',
+                        'Reviews',
                         overflow: TextOverflow.fade,
                         softWrap: false,
                         style: Theme.of(context).textTheme.display1,
                       ),
                     ),
                   ),
-                  Container()
-                  // ReviewsListWidget()
+                  ReviewsListWidget()
                 ],
               ),
             )

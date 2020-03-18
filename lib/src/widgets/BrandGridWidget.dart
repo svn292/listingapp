@@ -18,14 +18,17 @@ class BrandGridWidget extends StatelessWidget {
       primary: false,
       shrinkWrap: true,
       padding: EdgeInsets.only(top: 15),
-      crossAxisCount: MediaQuery.of(context).orientation == Orientation.portrait ? 2 : 4,
+      crossAxisCount:
+          MediaQuery.of(context).orientation == Orientation.portrait ? 2 : 4,
       itemCount: _categoriesList.list.length,
       itemBuilder: (BuildContext context, int index) {
         Category category = _categoriesList.list.elementAt(index);
         return InkWell(
           onTap: () {
             // print("ASDASDASDS");
-             Navigator.of(context).pushNamed('/Tabs', arguments: 6);
+            Navigator.of(context).pushNamed('/CategoriesItem',arguments: index+1);
+            // Navigator.of(context).pushNamed('/Tabs',
+            //     arguments: "6_${_categoriesList.list.elementAt(index).id}");
             // Navigator.of(context)
             //     .pushNamed('/Categorie', arguments: new RouteArgument(id: category.id, argumentsList: [category]));
           },
@@ -42,12 +45,17 @@ class BrandGridWidget extends StatelessWidget {
                     borderRadius: BorderRadius.circular(10),
                     boxShadow: [
                       BoxShadow(
-                          color: Theme.of(context).hintColor.withOpacity(0.10), offset: Offset(0, 4), blurRadius: 10)
+                          color: Theme.of(context).hintColor.withOpacity(0.10),
+                          offset: Offset(0, 4),
+                          blurRadius: 10)
                     ],
-                    gradient: LinearGradient(begin: Alignment.bottomLeft, end: Alignment.topRight, colors: [
-                      category.color,
-                      category.color.withOpacity(0.2),
-                    ])),
+                    gradient: LinearGradient(
+                        begin: Alignment.bottomLeft,
+                        end: Alignment.topRight,
+                        colors: [
+                          category.color,
+                          category.color.withOpacity(0.2),
+                        ])),
                 child: Hero(
                   tag: category.id,
                   child: new Icon(
@@ -91,7 +99,9 @@ class BrandGridWidget extends StatelessWidget {
                     borderRadius: BorderRadius.circular(6),
                     boxShadow: [
                       BoxShadow(
-                          color: Theme.of(context).hintColor.withOpacity(0.15), offset: Offset(0, 3), blurRadius: 10)
+                          color: Theme.of(context).hintColor.withOpacity(0.15),
+                          offset: Offset(0, 3),
+                          blurRadius: 10)
                     ]),
                 child: Column(
                   crossAxisAlignment: CrossAxisAlignment.start,
@@ -126,7 +136,6 @@ class BrandGridWidget extends StatelessWidget {
                     //   crossAxisAlignment: CrossAxisAlignment.center,
                     //   mainAxisAlignment: MainAxisAlignment.spaceBetween,
                     // ),
-                  
                   ],
                 ),
               ),
