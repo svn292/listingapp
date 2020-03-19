@@ -67,8 +67,9 @@ class _ReviewsListWidgetState extends State<ReviewsListWidget> {
   Widget build(BuildContext context) {
     return Container(
       child: Column(
+        mainAxisAlignment: MainAxisAlignment.start,
+        crossAxisAlignment: CrossAxisAlignment.start,
         children: <Widget>[
-         
           Padding(
             padding: const EdgeInsets.symmetric(horizontal: 20, vertical: 8),
             child: Text(
@@ -76,7 +77,8 @@ class _ReviewsListWidgetState extends State<ReviewsListWidget> {
               style: Theme.of(context).textTheme.subhead,
             ),
           ),
-           Padding(
+         
+          Padding(
             padding: const EdgeInsets.symmetric(horizontal: 20, vertical: 8),
             child: Text(
               "PHONE NO :  ${widget.listingItem.phone == null ? '' : widget.listingItem.phone}",
@@ -99,30 +101,47 @@ class _ReviewsListWidgetState extends State<ReviewsListWidget> {
           Padding(
             padding: const EdgeInsets.symmetric(horizontal: 20, vertical: 8),
             child: Row(
+              mainAxisAlignment: MainAxisAlignment.spaceBetween,
               children: <Widget>[
-                Expanded(
+                Container(
+                    width: MediaQuery.of(context).size.width * 0.4,
                     child: RaisedButton(
-                  onPressed: () async {
-                    // UrlLauncher.launch('tel :+${widget.listingItem.phone}')
-                    if (await canLaunch("tel:+${widget.listingItem.phone}")) {
-                      await launch("tel:+${widget.listingItem.phone}");
-                    } else {
-                      throw 'Could not launch';
-                    }
-                  },
-                  child: Text("CALL"),
-                )),
-                Expanded(
+                        color: Theme.of(context).accentColor,
+                        onPressed: () async {
+                          // UrlLauncher.launch('tel :+${widget.listingItem.phone}')
+                          if (await canLaunch(
+                              "tel:${widget.listingItem.phone}")) {
+                            await launch("tel:${widget.listingItem.phone}");
+                          } else {
+                            throw 'Could not launch';
+                          }
+                        },
+                        child: Text(
+                          'CALL',
+                          style: Theme.of(context).textTheme.title.merge(
+                                TextStyle(
+                                    color: Theme.of(context).primaryColor),
+                              ),
+                        ))),
+                Container(
+                    width: MediaQuery.of(context).size.width * 0.4,
                     child: RaisedButton(
-                  onPressed: () async {
-                    if (await canLaunch("mailto:${widget.listingItem.email}")) {
-                      await launch("mailto:${widget.listingItem.email}");
-                    } else {
-                      throw 'Could not launch';
-                    }
-                  },
-                  child: Text("MAIL"),
-                ))
+                      color: Theme.of(context).accentColor,
+                      onPressed: () async {
+                        if (await canLaunch(
+                            "mailto:${widget.listingItem.email}")) {
+                          await launch("mailto:${widget.listingItem.email}");
+                        } else {
+                          throw 'Could not launch';
+                        }
+                      },
+                      child: Text(
+                        'EMAIL',
+                        style: Theme.of(context).textTheme.title.merge(
+                              TextStyle(color: Theme.of(context).primaryColor),
+                            ),
+                      ),
+                    ))
               ],
             ),
           ),

@@ -20,19 +20,36 @@ class UtilitieHomeTabWidgetState extends State<UtilitieHomeTabWidget> {
   List<TableRow> _tblData = List();
   List<Text> _facility = List();
   setTableData() {
-    setState(() {
-      _tblData.clear();
-      _facility.clear();
-      widget.listingItem.time.forEach((key, value) {
-        if (key != "id" && key != "listing_id") {
-          _tblData.add(TableRow(children: [Center(child: Text(key)), Center(child: Text(value))]));
+    try {
+      setState(() {
+        _tblData.clear();
+        _facility.clear();
+        if (widget.listingItem.time != null && widget.listingItem.time != "") {
+          widget.listingItem.time.forEach((key, value) {
+            if (key != "id" && key != "listing_id") {
+              _tblData.add(TableRow(children: [
+                Center(child: Text(key)),
+                Center(child: Text(value))
+              ]));
+            }
+          });
+        }
+        if (widget.listingItem.facility != null &&
+            widget.listingItem.facility != "") {
+          for (var ts in widget.listingItem.facility) {
+            _facility.add(Text(ts));
+          }
         }
       });
+    } catch (e) {
+      dispose();
+    }
+  }
 
-      for (var ts in widget.listingItem.facility) {
-        _facility.add(Text(ts));
-      }
-    });
+  @override
+  void dispose() {
+    // TODO: implement dispose
+    super.dispose();
   }
 
   @override
@@ -153,7 +170,9 @@ class UtilitieHomeTabWidgetState extends State<UtilitieHomeTabWidget> {
             Padding(
                 padding:
                     const EdgeInsets.symmetric(horizontal: 20, vertical: 8),
-                child: Table(children: _tblData,))
+                child: Table(
+                  children: _tblData,
+                ))
           ],
         ),
         // Padding(

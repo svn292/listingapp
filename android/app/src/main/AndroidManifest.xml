@@ -18,9 +18,8 @@
         android:label="daangor"
         android:icon="@mipmap/launcher_icon">
         <meta-data android:name="com.google.android.geo.API_KEY"
-               android:value="AIzaSyCXuyYr-XqPtazHh1flN-1Gp00tO0V7MwI"/>
-               <!-- <meta-data android:name="com.google.android.gms.version"
-      android:value="@integer/google_play_services_version" /> -->
+               android:value="AIzaSyB80OPhR7JlsssPNNZQ65bYD9pGIJtt0fQ"/>
+             
         <activity
             android:name=".MainActivity"
             android:launchMode="singleTop"
