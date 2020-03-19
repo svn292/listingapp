@@ -1,11 +1,17 @@
 import 'package:daangor/config/ui_icons.dart';
+import 'package:daangor/src/util/constants.dart';
 import 'package:flutter/material.dart';
-
+import 'package:fluttertoast/fluttertoast.dart';
 class SearchBarHomeWidget extends StatelessWidget {
   SearchBarHomeWidget({
     Key key,
   }) : super(key: key);
-  List<String> suggestions=["Delux Room","Tripple Room","Single Room","King Room"];
+  List<String> suggestions = [
+    "Delux Room",
+    "Tripple Room",
+    "Single Room",
+    "King Room"
+  ];
   @override
   Widget build(BuildContext context) {
     return Container(
@@ -14,28 +20,59 @@ class SearchBarHomeWidget extends StatelessWidget {
         color: Theme.of(context).primaryColor,
         borderRadius: BorderRadius.circular(10),
         boxShadow: [
-          BoxShadow(color: Theme.of(context).hintColor.withOpacity(0.10), offset: Offset(0, 4), blurRadius: 10)
+          BoxShadow(
+              color: Theme.of(context).hintColor.withOpacity(0.10),
+              offset: Offset(0, 4),
+              blurRadius: 10)
         ],
       ),
-      child:Column(
+      child: Column(
         children: <Widget>[
           Container(
             decoration: BoxDecoration(
-              border: Border.all(color: Theme.of(context).hintColor.withOpacity(0.4),width: 1),
-              borderRadius: BorderRadius.circular(10.0)
-            ),
+                border: Border.all(
+                    color: Theme.of(context).hintColor.withOpacity(0.4),
+                    width: 1),
+                borderRadius: BorderRadius.circular(10.0)),
             child: Stack(
               alignment: Alignment.centerRight,
               children: <Widget>[
                 TextField(
+                  onSubmitted: (value) {
+                 
+                   int key=-1;
+                   CAT_LIST.forEach((k, v) { 
+                     if(value.trim().toLowerCase()==v.toString().toLowerCase()){
+                       key=k;
+                     }
+                   });
+//  print("LLLLLLLLLL    :::    "+key.toString());
+                    if (key !=-1) {
+                      Navigator.of(context).pushNamed('/CategoriesItem',
+                          arguments: key);
+                    }else{
+                       Fluttertoast.showToast(
+                                msg: "No Such Category",
+                                toastLength: Toast.LENGTH_SHORT,
+                                gravity: ToastGravity.BOTTOM,
+                                timeInSecForIos: 1,
+                                backgroundColor: Colors.red,
+                                textColor: Colors.white,
+                                fontSize: 16.0);
+                    }
+                  },
                   decoration: InputDecoration(
                     contentPadding: EdgeInsets.all(12),
                     hintText: 'Search',
-                    hintStyle: TextStyle(color: Theme.of(context).focusColor.withOpacity(0.8)),
-                    prefixIcon: Icon(UiIcons.loupe, size: 20, color: Theme.of(context).hintColor),
+                    hintStyle: TextStyle(
+                        color: Theme.of(context).focusColor.withOpacity(0.8)),
+                    prefixIcon: Icon(UiIcons.loupe,
+                        size: 20, color: Theme.of(context).hintColor),
                     border: UnderlineInputBorder(borderSide: BorderSide.none),
-                    enabledBorder: UnderlineInputBorder(borderSide: BorderSide.none),
-                    focusedBorder: UnderlineInputBorder(borderSide: BorderSide.none),
+                    enabledBorder:
+                        UnderlineInputBorder(borderSide: BorderSide.none),
+                    focusedBorder:
+                        UnderlineInputBorder(borderSide: BorderSide.none),
                   ),
                 ),
                 // IconButton(
@@ -54,30 +91,32 @@ class SearchBarHomeWidget extends StatelessWidget {
           // )
         ],
       ),
-       
     );
   }
 }
-  _buildSuggestions(List<String> list,BuildContext context) {
-    List<Widget> choices = List();
-    list.forEach((item) {
-      choices.add(
-        Container(
-          margin: const EdgeInsets.all(2.0),
-          child: Container(
-            decoration: BoxDecoration(
-              borderRadius: BorderRadius.circular(6),
-              color: Theme.of(context).hintColor.withOpacity(0.2),
-            ),
-            padding: const EdgeInsets.only(left:10.0,right: 10,top: 3,bottom: 3),
-            child: Text(
-              item,
-              style: Theme.of(context).textTheme.body1.merge(TextStyle(color: Theme.of(context).primaryColor),),
-            
-            ),
+
+_buildSuggestions(List<String> list, BuildContext context) {
+  List<Widget> choices = List();
+  list.forEach((item) {
+    choices.add(
+      Container(
+        margin: const EdgeInsets.all(2.0),
+        child: Container(
+          decoration: BoxDecoration(
+            borderRadius: BorderRadius.circular(6),
+            color: Theme.of(context).hintColor.withOpacity(0.2),
+          ),
+          padding:
+              const EdgeInsets.only(left: 10.0, right: 10, top: 3, bottom: 3),
+          child: Text(
+            item,
+            style: Theme.of(context).textTheme.body1.merge(
+                  TextStyle(color: Theme.of(context).primaryColor),
+                ),
           ),
         ),
-      );
-    }
-    );return choices;
-  }
+      ),
+    );
+  });
+  return choices;
+}

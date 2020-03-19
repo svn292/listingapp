@@ -72,7 +72,7 @@ class EmptyFavoritesWidget extends StatelessWidget {
           SizedBox(height: 50),
           FlatButton(
             onPressed: () {
-              Navigator.of(context).pushNamed('/Tabs', arguments: 2);
+              Navigator.of(context).pushNamed('/Tabs', arguments: 1);
             },
             padding: EdgeInsets.symmetric(vertical: 12, horizontal: 30),
             color: Theme.of(context).focusColor.withOpacity(0.15),

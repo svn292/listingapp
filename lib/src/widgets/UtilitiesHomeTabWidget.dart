@@ -17,14 +17,34 @@ class UtilitieHomeTabWidget extends StatefulWidget {
 }
 
 class UtilitieHomeTabWidgetState extends State<UtilitieHomeTabWidget> {
+  List<TableRow> _tblData = List();
+  List<Text> _facility = List();
+  setTableData() {
+    setState(() {
+      _tblData.clear();
+      _facility.clear();
+      widget.listingItem.time.forEach((key, value) {
+        if (key != "id" && key != "listing_id") {
+          _tblData.add(TableRow(children: [Center(child: Text(key)), Center(child: Text(value))]));
+        }
+      });
+
+      for (var ts in widget.listingItem.facility) {
+        _facility.add(Text(ts));
+      }
+    });
+  }
+
   @override
   void initState() {
+    setTableData();
     print("AAAAAAAAAAAA   " + widget.listingItem.code);
     super.initState();
   }
 
   @override
   Widget build(BuildContext context) {
+    print(widget.listingItem.facility);
     return Column(
       crossAxisAlignment: CrossAxisAlignment.start,
       children: <Widget>[
@@ -110,17 +130,30 @@ class UtilitieHomeTabWidgetState extends State<UtilitieHomeTabWidget> {
             Padding(
               padding: const EdgeInsets.symmetric(horizontal: 20, vertical: 8),
               child: Text(
-                "PHONE NO :  ${widget.listingItem.phone == null ? '' : widget.listingItem.phone}",
-                style: Theme.of(context).textTheme.display2,
+                "FACILITIES : ",
+                style: Theme.of(context).textTheme.subhead,
               ),
+            ),
+            Padding(
+                padding:
+                    const EdgeInsets.symmetric(horizontal: 20, vertical: 8),
+                child: Column(
+                  children: _facility,
+                )),
+            SizedBox(
+              height: 20,
             ),
             Padding(
               padding: const EdgeInsets.symmetric(horizontal: 20, vertical: 8),
               child: Text(
-                "ADDRESS :  ${widget.listingItem.address == null ? '' : widget.listingItem.address}",
-                style: Theme.of(context).textTheme.display2,
+                "TIME :",
+                style: Theme.of(context).textTheme.subhead,
               ),
-            )
+            ),
+            Padding(
+                padding:
+                    const EdgeInsets.symmetric(horizontal: 20, vertical: 8),
+                child: Table(children: _tblData,))
           ],
         ),
         // Padding(

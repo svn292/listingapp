@@ -89,16 +89,18 @@ class _TabsWidgetState extends State<TabsWidget> {
         ),
         backgroundColor: Colors.transparent,
         elevation: 0,
-        title: Row(
-          children: <Widget>[
-            Text(
-              widget.currentTitle,
-              style: Theme.of(context).textTheme.display1,
-            ),
-            SizedBox(width: 20,),
-            Image.asset("img/dark_logo.png", width: 100,)
-          ],
-        ),
+        title: Image.asset("img/dark_logo.png", width: 100,),
+        // title: Row(
+        //   children: <Widget>[
+
+            // Text(
+            //   widget.currentTitle,
+            //   style: Theme.of(context).textTheme.display1,
+            // ),
+            // SizedBox(width: 20,),
+            // Image.asset("img/dark_logo.png", width: 100,)
+        //   ],
+        // ),
         actions: <Widget>[
           // Container(
           //     width: 30,

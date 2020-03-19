@@ -201,8 +201,8 @@ class _UtilitieWidgetState extends State<UtilitieWidget>
                       ),
                     ),
                   ),
-                  Container()
-                  // ReviewsListWidget()
+                  // Container()
+                  ReviewsListWidget(widget.listingItem)
                 ],
               ),
             )

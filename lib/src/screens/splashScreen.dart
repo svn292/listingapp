@@ -52,7 +52,7 @@ class _SplashState extends State<Splash> {
             )
           : SignInWidget(),
       title: new Text(
-        'Assam 1st Buisiness Listing',
+        'Assam 1st Business Listing',
         textAlign: TextAlign.center,
         style: new TextStyle(
           fontWeight: FontWeight.bold,

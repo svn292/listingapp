@@ -1,6 +1,13 @@
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
     package="com.example.listing">
-<uses-permission android:name="android.permission.INTERNET"/>
+  
+<uses-permission android:name="android.permission.ACCESS_FINE_LOCATION" />
+<uses-permission android:name="android.permission.ACCESS_COARSE_LOCATION" />
+<uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE" />
+<uses-permission android:name="android.permission.READ_EXTERNAL_STORAGE" />
+<uses-permission android:name="android.permission.CAMERA" />
+<uses-permission android:name="android.permission.INTERNET" />
+    <uses-permission android:name="android.permission.FLASHLIGHT" />
     <!-- io.flutter.app.FlutterApplication is an android.app.Application that
          calls FlutterMain.startInitialization(this); in its onCreate method.
          In most cases you can leave this as-is, but you if you want to provide
@@ -10,6 +17,10 @@
         android:name="io.flutter.app.FlutterApplication"
         android:label="daangor"
         android:icon="@mipmap/launcher_icon">
+        <meta-data android:name="com.google.android.geo.API_KEY"
+               android:value="AIzaSyCXuyYr-XqPtazHh1flN-1Gp00tO0V7MwI"/>
+               <!-- <meta-data android:name="com.google.android.gms.version"
+      android:value="@integer/google_play_services_version" /> -->
         <activity
             android:name=".MainActivity"
             android:launchMode="singleTop"

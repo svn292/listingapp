@@ -46,22 +46,28 @@ class _DrawerWidgetState extends State<DrawerWidget> {
         children: <Widget>[
           (TOKEN == null || TOKEN == "")
               ? Container(
-                  child: Center(
-                    child: FlatButton(
-                      padding:
-                          EdgeInsets.symmetric(vertical: 12, horizontal: 70),
-                      onPressed: () {
-                        Navigator.of(context).pushNamed('/SignIn');
-                      },
-                      child: Text(
-                        'SIGN IN',
-                        style: Theme.of(context).textTheme.title.merge(
-                              TextStyle(color: Theme.of(context).primaryColor),
-                            ),
+                  child: Column(
+                    children: <Widget>[
+                      SizedBox(height: 50,),
+                      Center(
+                        child: FlatButton(
+                          padding:
+                              EdgeInsets.symmetric(vertical: 10, horizontal: 70),
+                          onPressed: () {
+                            Navigator.of(context).pushNamed('/SignIn');
+                          },
+                          child: Text(
+                            'Guest User',
+                            style: Theme.of(context).textTheme.title.merge(
+                                  TextStyle(color: Theme.of(context).primaryColor),
+                                ),
+                          ),
+                          color: Theme.of(context).accentColor,
+                          shape: StadiumBorder(),
+                        ),
                       ),
-                      color: Theme.of(context).accentColor,
-                      shape: StadiumBorder(),
-                    ),
+                      SizedBox(height: 50,),
+                    ],
                   ),
                 )
               : GestureDetector(

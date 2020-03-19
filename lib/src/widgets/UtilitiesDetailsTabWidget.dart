@@ -39,7 +39,12 @@ class UtilitiesDetailsTabWidgetState extends State<UtilitiesDetailsTabWidget> {
             dt['description'],
             dt['category'][0],
             dt['address'],
-            dt['phone']));
+            dt['phone'],
+                   dt['facility'],
+                    dt['latitude'],
+                     dt['longitude'],
+                        dt['email'],
+                        dt['time']));
       }
     });
   }

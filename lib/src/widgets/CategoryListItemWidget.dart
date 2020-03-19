@@ -72,7 +72,12 @@ class _CategoryListItemWidgetState extends State<CategoryListItemWidget> {
               data['description'],
                     data['category'][0],
                   data['address'],
-                  data['phone']);
+                  data['phone'],
+                   data['facility'],
+                    data['latitude'],
+                     data['longitude'],
+                        data['email'],
+                        data['time']);
           Navigator.of(context).pushNamed('/Utilities', arguments: listingItem);
         },
         child: Container(

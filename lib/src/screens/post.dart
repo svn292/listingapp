@@ -202,7 +202,7 @@ class _UtilitieWidgetState extends State<UtilitieWidget>
                       ),
                     ),
                   ),
-                  ReviewsListWidget()
+                  ReviewsListWidget(widget.listingItem)
                 ],
               ),
             )
