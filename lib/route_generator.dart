@@ -1,4 +1,6 @@
+import 'package:daangor/src/models/category.dart';
 import 'package:daangor/src/screens/categoriesNW.dart';
+import 'package:daangor/src/screens/subCategory.dart';
 import 'package:flutter/material.dart';
 import 'package:daangor/src/models/route_argument.dart';
 import 'package:daangor/src/screens/Categorie.dart';
@@ -38,6 +40,8 @@ class RouteGenerator {
         return MaterialPageRoute(builder: (_) => CategoriesWidget());
       case '/CategoriesItem':
         return MaterialPageRoute(builder: (_) => CategoriesNew(args));
+        case '/SubCategory':
+        return MaterialPageRoute(builder: (_) => SubCat(args));
       case '/Categorie':
         return MaterialPageRoute(builder: (_) => FavoritesWidget());
       // case '/Categorie':

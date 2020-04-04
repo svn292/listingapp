@@ -26,7 +26,8 @@ class BrandGridWidget extends StatelessWidget {
         return InkWell(
           onTap: () {
             // print("ASDASDASDS");
-            Navigator.of(context).pushNamed('/CategoriesItem',arguments: index+1);
+            // Navigator.of(context).pushNamed('/CategoriesItem',arguments: index+1);
+            Navigator.of(context).pushNamed('/SubCategory',arguments: index+1);
             // Navigator.of(context).pushNamed('/Tabs',
             //     arguments: "6_${_categoriesList.list.elementAt(index).id}");
             // Navigator.of(context)

@@ -9,27 +9,28 @@ import 'package:daangor/src/widgets/CategoryListItemWidget.dart';
 import 'package:daangor/src/widgets/DrawerWidget.dart';
 import 'package:daangor/src/widgets/EmptyFavoritesWidget.dart';
 import 'package:daangor/src/widgets/FavoriteListItemWidget.dart';
+import 'package:daangor/src/widgets/SubCategoryListItemWidget.dart';
 import 'package:daangor/src/widgets/UtilitiesGridItemWidget.dart';
 import 'package:daangor/src/widgets/SearchBarWidget.dart';
 import 'package:dio/dio.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_staggered_grid_view/flutter_staggered_grid_view.dart';
 
-class CategoriesNew extends StatefulWidget {
-  CategoriesNew(this.id);
+class SubCat extends StatefulWidget {
+  SubCat(this.id);
   int id;
   @override
-  _CategoriesNewState createState() => _CategoriesNewState();
+  _SubCatState createState() => _SubCatState();
 }
 
-class _CategoriesNewState extends State<CategoriesNew> {
+class _SubCatState extends State<SubCat> {
   final GlobalKey<ScaffoldState> _scaffoldKey = new GlobalKey<ScaffoldState>();
   String layout = 'list';
   // UtilitiesList _utilitiesList = new UtilitiesList();
   List<CategoryModel> categoryItems = List();
   getCategoryItemList(int id) async {
     categoryItems.clear();
-    var response = await Dio().get("$BASEURL/listingbycategory/$id");
+    var response = await Dio().get("$BASEURL/getallsubcategory/$id");
     List lst = jsonDecode(response.data);
     print(lst);
     if (this.mounted) {
@@ -40,9 +41,9 @@ class _CategoriesNewState extends State<CategoriesNew> {
           categoryItems.add(CategoryModel(
               (dt)['id'],
               (dt)['name'],
-              (dt)['listing_cover'] == null
+              (dt)['thumbnail'] == null
                   ? "https://daangor.com/uploads/listing_thumbnails/thumbnail.png"
-                  : CAT_TUMB_BASE_URL + (dt)['listing_cover']));
+                  : CAT_TUMB_BASE_URL + (dt)['thumbnail']));
         }
       });
     }
@@ -57,7 +58,7 @@ class _CategoriesNewState extends State<CategoriesNew> {
 
   @override
   Widget build(BuildContext context) {
-    print("PPPPPPPPPPPP  : " + widget.id.toString());
+    print("45555555555555555  : " + widget.id.toString());
     return SafeArea(
       child: Scaffold(
         key: _scaffoldKey,
@@ -73,7 +74,7 @@ class _CategoriesNewState extends State<CategoriesNew> {
           title: Row(
             children: <Widget>[
               Text(
-                "Category List",
+                "Sub Category List",
                 style: Theme.of(context).textTheme.display1,
               ), SizedBox(width: 20,),
             Image.asset("img/dark_logo.png", width: 100,)
@@ -121,7 +122,12 @@ class _CategoriesNewState extends State<CategoriesNew> {
                       UiIcons.heart,
                       color: Theme.of(context).hintColor,
                     ),
-                  
+                    title: Text(
+                      CAT_LIST[widget.id],
+                      overflow: TextOverflow.fade,
+                      softWrap: false,
+                      style: Theme.of(context).textTheme.display1,
+                    ),
                     trailing: Row(
                       mainAxisSize: MainAxisSize.min,
                       children: <Widget>[
@@ -167,7 +173,7 @@ class _CategoriesNewState extends State<CategoriesNew> {
                     return SizedBox(height: 10);
                   },
                   itemBuilder: (context, index) {
-                    return CategoryListItemWidget(
+                    return SubCategoryListItemWidget(
                       heroTag: 'category_list',
                       categoryModel: categoryItems.elementAt(index),
                       onDismissed: () {

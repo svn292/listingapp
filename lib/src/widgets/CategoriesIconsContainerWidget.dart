@@ -39,7 +39,7 @@ _buildSuggestions(List<Category> list, BuildContext context) {
           category: list.elementAt(i),
           onPressed: (id) {
             // print("FFFFFFFFFFFFF :: " + id);
-            Navigator.of(context).pushNamed('/CategoriesItem', arguments: i+1);
+            Navigator.of(context).pushNamed('/SubCategory', arguments: i+1);
           },
         ),
       ),
