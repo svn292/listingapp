@@ -1,9 +1,11 @@
 import 'package:daangor/config/ui_icons.dart';
 import 'package:daangor/src/models/listing.dart';
 import 'package:daangor/src/models/product_color.dart';
+import 'package:daangor/src/util/constants.dart';
 import 'package:daangor/src/widgets/PopularLocationCarouselWidget.dart';
 import 'package:flutter/material.dart';
 import 'package:daangor/src/models/utilities.dart';
+import 'package:share/share.dart';
 
 // ignore: must_be_immutable
 class UtilitieHomeTabWidget extends StatefulWidget {
@@ -175,6 +177,42 @@ class UtilitieHomeTabWidgetState extends State<UtilitieHomeTabWidget> {
                 ))
           ],
         ),
+
+Row(
+  mainAxisAlignment: MainAxisAlignment.end,
+  crossAxisAlignment: CrossAxisAlignment.end,
+  children: <Widget>[
+        FloatingActionButton(onPressed: (){
+    
+       Share.share("https://daangor.com/general/%20/"+widget.listingItem.code);
+    
+    },
+    
+    child: Icon(Icons.share),),
+  ],
+),
+
+
+          // Center(
+          //   child: Container(
+          //             width: MediaQuery.of(context).size.width * 0.4,
+          //             child: RaisedButton(
+          //               color: Theme.of(context).accentColor,
+          //               onPressed: ()  async {
+          //           Share.share("https://daangor.com/general/%20/"+widget.listingItem.code);
+          //               },
+          //               child: Text(
+          //                 'SHARE',
+          //                 style: Theme.of(context).textTheme.title.merge(
+          //                       TextStyle(color: Theme.of(context).primaryColor),
+          //                     ),
+          //               ),
+          //             )),
+          // ),
+
+
+
+
         // Padding(
         //   padding: const EdgeInsets.symmetric(horizontal: 20, vertical: 8),
         //   child: SizedBox(

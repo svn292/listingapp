@@ -1,4 +1,4 @@
-class ListingItem {
+class  ListingItem {
   ListingItem(
       this.code,
       this.name,

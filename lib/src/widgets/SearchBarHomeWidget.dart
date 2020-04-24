@@ -1,7 +1,12 @@
+import 'dart:convert';
+
 import 'package:daangor/config/ui_icons.dart';
+import 'package:daangor/src/models/listing.dart';
 import 'package:daangor/src/util/constants.dart';
+import 'package:dio/dio.dart';
 import 'package:flutter/material.dart';
 import 'package:fluttertoast/fluttertoast.dart';
+
 class SearchBarHomeWidget extends StatelessWidget {
   SearchBarHomeWidget({
     Key key,
@@ -38,28 +43,55 @@ class SearchBarHomeWidget extends StatelessWidget {
               alignment: Alignment.centerRight,
               children: <Widget>[
                 TextField(
-                  onSubmitted: (value) {
-                 
-                   int key=-1;
-                   CAT_LIST.forEach((k, v) { 
-                     if(value.trim().toLowerCase()==v.toString().toLowerCase()){
-                       key=k;
-                     }
-                   });
-//  print("LLLLLLLLLL    :::    "+key.toString());
-                    if (key !=-1) {
-                      Navigator.of(context).pushNamed('/CategoriesItem',
-                          arguments: key);
-                    }else{
-                       Fluttertoast.showToast(
-                                msg: "No Such Category",
-                                toastLength: Toast.LENGTH_SHORT,
-                                gravity: ToastGravity.BOTTOM,
-                                timeInSecForIos: 1,
-                                backgroundColor: Colors.red,
-                                textColor: Colors.white,
-                                fontSize: 16.0);
-                    }
+                  onSubmitted: (value) async {
+
+                    Navigator.of(context)
+                        .pushNamed('/Search', arguments: value);
+
+
+//                    int key=-1;
+//                    CAT_LIST.forEach((k, v) {
+//                      if(value.trim().toLowerCase()==v.toString().toLowerCase()){
+//                        key=k;
+//                      }
+//                    });
+// //  print("LLLLLLLLLL    :::    "+key.toString());
+//                     if (key !=-1) {
+//                       Navigator.of(context).pushNamed('/CategoriesItem',
+//                           arguments: key);
+//                     }else{
+//                        Fluttertoast.showToast(
+//                                 msg: "No Such Category",
+//                                 toastLength: Toast.LENGTH_SHORT,
+//                                 gravity: ToastGravity.BOTTOM,
+//                                 timeInSecForIos: 1,
+//                                 backgroundColor: Colors.red,
+//                                 textColor: Colors.white,
+//                                 fontSize: 16.0);
+//                     }
+
+                  //   var response =
+                  //       await Dio().get("$BASEURL/search?search_string=$value");
+                  //   print("MMMMMMMMM   ::   " + response.data);
+                  //   var data = jsonDecode(response.data);
+                  //   ListingItem listingItem = ListingItem(
+                  //       data['code'],
+                  //       data['name'],
+                  //       data['listing_type'],
+                  //       data['listing_cover'] == null
+                  //           ? "https://daangor.com/uploads/listing_thumbnails/thumbnail.png"
+                  //           : CAT_TUMB_BASE_URL + data['listing_cover'],
+                  //       data['description'],
+                  //       data['categories'][0],
+                  //       data['address'],
+                  //       data['phone'],
+                  //       data['amenities'],
+                  //       data['latitude'],
+                  //       data['longitude'],
+                  //       data['email'],
+                  //       data['time']);
+                  //   Navigator.of(context)
+                  //       .pushNamed('/Utilities', arguments: listingItem);
                   },
                   decoration: InputDecoration(
                     contentPadding: EdgeInsets.all(12),

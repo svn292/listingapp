@@ -5,6 +5,7 @@ import 'package:flutter/material.dart';
 import 'package:google_maps_flutter/google_maps_flutter.dart';
 import 'package:url_launcher/url_launcher.dart' as UrlLauncher;
 import 'package:url_launcher/url_launcher.dart';
+import 'package:share/share.dart';
 
 // ignore: must_be_immutable
 class ReviewsListWidget extends StatefulWidget {
@@ -85,9 +86,8 @@ class _ReviewsListWidgetState extends State<ReviewsListWidget> {
               style: Theme.of(context).textTheme.subhead,
             ),
           ),
-          SizedBox(height: 20),
           Padding(
-            padding: const EdgeInsets.symmetric(horizontal: 20, vertical: 8),
+            padding: const EdgeInsets.symmetric(horizontal: 5, vertical: 8),
             child: Container(
                 child: GoogleMap(
                   mapType: MapType.normal,
@@ -97,14 +97,14 @@ class _ReviewsListWidgetState extends State<ReviewsListWidget> {
                 ),
                 height: 300),
           ),
-          SizedBox(height: 20),
+ 
           Padding(
-            padding: const EdgeInsets.symmetric(horizontal: 20, vertical: 8),
+            padding: const EdgeInsets.symmetric(horizontal: 5, vertical: 5),
             child: Row(
               mainAxisAlignment: MainAxisAlignment.spaceBetween,
               children: <Widget>[
                 Container(
-                    width: MediaQuery.of(context).size.width * 0.4,
+                    width: (MediaQuery.of(context).size.width * 0.5)-8,
                     child: RaisedButton(
                         color: Theme.of(context).accentColor,
                         onPressed: () async {
@@ -124,7 +124,7 @@ class _ReviewsListWidgetState extends State<ReviewsListWidget> {
                               ),
                         ))),
                 Container(
-                    width: MediaQuery.of(context).size.width * 0.4,
+                    width: (MediaQuery.of(context).size.width * 0.5)-8,
                     child: RaisedButton(
                       color: Theme.of(context).accentColor,
                       onPressed: () async {
