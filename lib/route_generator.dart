@@ -1,4 +1,5 @@
 import 'package:daangor/src/models/category.dart';
+import 'package:daangor/src/screens/ads.dart';
 import 'package:daangor/src/screens/categoriesNW.dart';
 import 'package:daangor/src/screens/search.dart';
 import 'package:daangor/src/screens/subCategory.dart';
@@ -37,6 +38,8 @@ class RouteGenerator {
         return MaterialPageRoute(builder: (_) => UtilitieWidget(args));
       case '/Search':
         return MaterialPageRoute(builder: (_) => Search(args));
+      case '/Ads':
+        return MaterialPageRoute(builder: (_) => Ads());
       case '/Languages':
         return MaterialPageRoute(builder: (_) => LanguagesWidget());
       case '/Categories':

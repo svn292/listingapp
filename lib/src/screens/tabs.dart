@@ -2,6 +2,7 @@ import 'package:daangor/config/ui_icons.dart';
 
 import 'package:daangor/src/screens/account.dart';
 import 'package:daangor/src/screens/Categories.dart';
+import 'package:daangor/src/screens/ads.dart';
 import 'package:daangor/src/screens/chat.dart';
 import 'package:daangor/src/screens/favorites.dart';
 import 'package:daangor/src/screens/home.dart';
@@ -10,6 +11,7 @@ import 'package:daangor/src/screens/notifications.dart';
 import 'package:daangor/src/widgets/DrawerWidget.dart';
 import 'package:daangor/src/widgets/FilterWidget.dart';
 import 'package:flutter/material.dart';
+import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 
 // ignore: must_be_immutable
 class TabsWidget extends StatefulWidget {
@@ -63,7 +65,7 @@ class _TabsWidgetState extends State<TabsWidget> {
           break;
         case 2:
           widget.currentTitle = 'Favorites';
-          widget.currentPage = FavoritesWidget();
+          widget.currentPage = Ads();
           break;
 
         default:
@@ -184,7 +186,7 @@ class _TabsWidgetState extends State<TabsWidget> {
           //   title: new Container(height: 0.0),
           // ),
           BottomNavigationBarItem(
-            icon: new Icon(UiIcons.heart),
+            icon: new Icon(FontAwesomeIcons.listAlt),
             title: new Container(height: 0.0),
           ),
           BottomNavigationBarItem(
