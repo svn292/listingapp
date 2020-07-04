@@ -1,7 +1,5 @@
 import 'package:daangor/config/ui_icons.dart';
 import 'package:daangor/src/models/listing.dart';
-import 'package:daangor/src/models/utilities.dart';
-import 'package:daangor/src/models/route_argument.dart';
 import 'package:daangor/src/widgets/DrawerWidget.dart';
 import 'package:daangor/src/widgets/UtilitiesHomeTabWidget.dart';
 import 'package:daangor/src/widgets/ReviewsListWidget.dart';
@@ -30,7 +28,7 @@ class _UtilitieWidgetState extends State<UtilitieWidget>
 
   @override
   void initState() {
-    print("IIIIIIIIIIIIIIINN    ::  "+widget.listingItem.code);
+    print("IIIIIIIIIIIIIIINN    ::  " + widget.listingItem.code);
     _tabController =
         TabController(length: 2, initialIndex: _tabIndex, vsync: this);
     _tabController.addListener(_handleTabSelection);
@@ -63,7 +61,11 @@ class _UtilitieWidgetState extends State<UtilitieWidget>
       ),
       body: CustomScrollView(slivers: <Widget>[
         SliverAppBar(
-          title:  Center(child: Image.asset("img/dark_logo.png", width: 100,)),
+          title: Center(
+              child: Image.asset(
+            "img/dark_logo.png",
+            width: 100,
+          )),
           floating: true,
           automaticallyImplyLeading: false,
           leading: new IconButton(

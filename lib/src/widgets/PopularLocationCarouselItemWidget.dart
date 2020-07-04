@@ -1,6 +1,4 @@
 import 'package:daangor/src/models/listing.dart';
-import 'package:daangor/src/models/utilities.dart';
-import 'package:daangor/src/models/route_argument.dart';
 //import 'package:daangor/src/widgets/AvailableProgressBarWidget.dart';
 import 'package:flutter/material.dart';
 
@@ -21,8 +19,7 @@ class PopularLocationCarouselItemWidget extends StatelessWidget {
   Widget build(BuildContext context) {
     return InkWell(
       onTap: () {
-          Navigator.of(context).pushNamed('/Utilities', arguments: listingItem);
-      
+        Navigator.of(context).pushNamed('/Utilities', arguments: listingItem);
       },
       child: Container(
         margin: EdgeInsets.only(left: this.marginLeft, right: 20),

@@ -1,0 +1,30 @@
+class AddNewListingModel {
+  String title;
+  String description;
+  int is_featured;
+  int country_id = 5;
+  int city_id;
+  int address;
+  double latitude;
+  double longitude;
+  String google_analytics_id;
+  int categories;
+  String video_provider;
+  String video_url;
+  String tags;
+  String seo_meta_tags;
+  String website;
+  String email;
+  String phone;
+  String listing_type = 'general';
+  String facebook;
+  String twitter;
+  String linkedin;
+  String saturday;
+  String sunday;
+  String monday;
+  String tuesday;
+  String wednesday;
+  String thursday;
+  String friday;
+}

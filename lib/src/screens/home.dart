@@ -6,57 +6,19 @@ import 'package:daangor/src/models/listing.dart';
 import 'package:daangor/src/models/utilities.dart';
 import 'package:daangor/src/util/constants.dart';
 import 'package:daangor/src/widgets/CategoriesIconsContainerWidget.dart';
-import 'package:daangor/src/widgets/CategorizedUtilitiesWidget.dart';
 import 'package:daangor/src/widgets/HomeSliderWidget.dart';
-import 'package:dio/dio.dart';
-import 'package:flutter/material.dart';
 import 'package:daangor/src/widgets/PopularLocationCarouselWidget.dart';
 import 'package:daangor/src/widgets/SearchBarHomeWidget.dart';
-//import 'package:daangor/src/widgets/BrandsIconsCarouselWidget.dart';
-//import 'package:daangor/src/widgets/FlashSalesCarouselWidget.dart';
-//import 'package:daangor/src/widgets/FlashSalesWidget.dart';
-//import 'package:daangor/src/models/brand.dart';
-//import 'package:sticky_headers/sticky_headers/widget.dart';
+import 'package:dio/dio.dart';
+import 'package:flutter/material.dart';
 
 class HomeWidget extends StatefulWidget {
   @override
   _HomeWidgetState createState() => _HomeWidgetState();
 }
 
-class _HomeWidgetState extends State<HomeWidget>
-    with SingleTickerProviderStateMixin {
+class _HomeWidgetState extends State<HomeWidget> with SingleTickerProviderStateMixin {
   List<ListingItem> listingItems = List();
-  getPopularList() async {
-    var response = await Dio().get("$BASEURL/popular_listing");
-    print("MMMMMMMMM   ::   " + response.data);
-
-    var data = jsonDecode(response.data);
-    if (this.mounted) {
-      
-      setState(() {
-        listingItems.clear();
-        for (Map dt in data) {
-          print("AAAAAAAAAA  :  " + dt['category'][0]);
-          listingItems.add(ListingItem(
-              dt['code'],
-              dt['name'],
-              dt['listing_type'],
-              dt['listing_cover'] == null
-                  ? "https://daangor.com/uploads/listing_thumbnails/thumbnail.png"
-                  : CAT_TUMB_BASE_URL + dt['listing_cover'],
-              dt['description'],
-                   dt['category'][0],
-                  dt['address'],
-                  dt['phone'],
-                   dt['facility'],
-                    dt['latitude'],
-                     dt['longitude'],
-                        dt['email'],
-                        dt['time']));
-        }
-      });
-    }
-  }
 
   getCategoryList() async {
     List categories = List();
@@ -79,12 +41,10 @@ class _HomeWidgetState extends State<HomeWidget>
   @override
   void initState() {
     // print("LLLLLLLLLLLLLLLLLLLLL   :   " + TOKEN);
-    getCategoryList();
+//    getCategoryList();
     getPopularList();
-    animationController =
-        AnimationController(duration: Duration(milliseconds: 200), vsync: this);
-    CurvedAnimation curve =
-        CurvedAnimation(parent: animationController, curve: Curves.easeIn);
+    animationController = AnimationController(duration: Duration(milliseconds: 200), vsync: this);
+    CurvedAnimation curve = CurvedAnimation(parent: animationController, curve: Curves.easeIn);
     animationOpacity = Tween(begin: 0.0, end: 1.0).animate(curve)
       ..addListener(() {
         setState(() {});
@@ -105,66 +65,98 @@ class _HomeWidgetState extends State<HomeWidget>
   @override
   Widget build(BuildContext context) {
     return SingleChildScrollView(
-        child: Column(
-      children: <Widget>[
-        Stack(
-          children: <Widget>[
-            HomeSliderWidget(),
-            Container(
-              margin: const EdgeInsets.only(top: 150, bottom: 20),
-              padding: const EdgeInsets.only(right: 20, left: 20),
-              child: SearchBarHomeWidget(),
-            ),
-          ],
-        ),
-        Container(
+      child: Column(
+        children: <Widget>[
+          Stack(
+            children: <Widget>[
+              HomeSliderWidget(),
+              Container(
+                margin: const EdgeInsets.only(top: 150, bottom: 20),
+                padding: const EdgeInsets.only(right: 20, left: 20),
+                child: SearchBarHomeWidget(),
+              ),
+            ],
+          ),
+          Container(
             padding: const EdgeInsets.only(right: 2, left: 2),
             child: CategoriesIconsContainerWidget(
               categoriesList: _categoriesList,
-            )),
-        Padding(
-            padding: const EdgeInsets.symmetric(horizontal: 20, vertical: 8),
-            child: Column(
-              children: <Widget>[
-                ListTile(
-                  dense: true,
-                  contentPadding: EdgeInsets.symmetric(vertical: 0),
-                  leading: Icon(
-                    UiIcons.favorites,
-                    color: Theme.of(context).hintColor,
+            ),
+          ),
+          Padding(
+              padding: const EdgeInsets.symmetric(horizontal: 20, vertical: 8),
+              child: Column(
+                children: <Widget>[
+                  ListTile(
+                    dense: true,
+                    contentPadding: EdgeInsets.symmetric(vertical: 0),
+                    leading: Icon(
+                      UiIcons.favorites,
+                      color: Theme.of(context).hintColor,
+                    ),
+                    title: Text(
+                      'Popular',
+                      style: Theme.of(context).textTheme.display1,
+                    ),
                   ),
-                  title: Text(
-                    'Popular',
-                    style: Theme.of(context).textTheme.display1,
-                  ),
-                ),
-              ],
-            )),
-        PopularLocationCarouselWidget(
-            heroTag: 'home_flash_sales', listingList: listingItems),
+                ],
+              )),
+          PopularLocationCarouselWidget(heroTag: 'home_flash_sales', listingList: listingItems),
 
-        //   Padding(
-        //     padding: const EdgeInsets.symmetric(horizontal: 20, vertical: 8),
-        //     child:Column(
-        //       children: <Widget>[
-        //         ListTile(
-        //           dense: true,
-        //           contentPadding: EdgeInsets.symmetric(vertical: 0),
-        //           leading: Icon(
-        //             UiIcons.box,
-        //             color: Theme.of(context).hintColor,
-        //           ),
-        //           title: Text(
-        //             'Recent',
-        //             style: Theme.of(context).textTheme.display1,
-        //           ),
-        //         ),
-        //       ],
-        //     )
+          //   Padding(
+          //     padding: const EdgeInsets.symmetric(horizontal: 20, vertical: 8),
+          //     child:Column(
+          //       children: <Widget>[
+          //         ListTile(
+          //           dense: true,
+          //           contentPadding: EdgeInsets.symmetric(vertical: 0),
+          //           leading: Icon(
+          //             UiIcons.box,
+          //             color: Theme.of(context).hintColor,
+          //           ),
+          //           title: Text(
+          //             'Recent',
+          //             style: Theme.of(context).textTheme.display1,
+          //           ),
+          //         ),
+          //       ],
+          //     )
 
-        // ),
-        //   CategorizedUtilitiesWidget(animationOpacity : animationOpacity ,utilitiesList: _utilitiesList.recentList,)
-      ],
-    ));
+          // ),
+          //   CategorizedUtilitiesWidget(animationOpacity : animationOpacity ,utilitiesList: _utilitiesList.recentList,)
+        ],
+      ),
+    );
+  }
+
+  getPopularList() async {
+    var response = await Dio().get("$BASEURL/popular_listing");
+    print("MMMMMMMMM   ::   " + response.data);
+
+    var data = jsonDecode(response.data);
+    if (this.mounted) {
+      setState(() {
+        listingItems.clear();
+        for (Map dt in data) {
+          print("AAAAAAAAAA  :  " + dt['category'][0]);
+          listingItems.add(ListingItem(
+              dt['code'],
+              dt['name'],
+              dt['listing_type'],
+              dt['listing_cover'] == null
+                  ? "https://daangor.com/uploads/listing_thumbnails/thumbnail.png"
+                  : CAT_TUMB_BASE_URL + dt['listing_cover'],
+              dt['description'],
+              dt['category'][0],
+              dt['address'],
+              dt['phone'],
+              dt['facility'],
+              dt['latitude'],
+              dt['longitude'],
+              dt['email'],
+              dt['time']));
+        }
+      });
+    }
   }
 }

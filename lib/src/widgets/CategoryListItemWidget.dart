@@ -3,8 +3,6 @@ import 'dart:convert';
 import 'package:daangor/config/ui_icons.dart';
 import 'package:daangor/src/models/category_model.dart';
 import 'package:daangor/src/models/listing.dart';
-import 'package:daangor/src/models/utilities.dart';
-import 'package:daangor/src/models/route_argument.dart';
 import 'package:daangor/src/util/constants.dart';
 import 'package:dio/dio.dart';
 import 'package:flutter/material.dart';
@@ -70,14 +68,14 @@ class _CategoryListItemWidgetState extends State<CategoryListItemWidget> {
                   ? "https://daangor.com/uploads/listing_thumbnails/thumbnail.png"
                   : CAT_TUMB_BASE_URL + data['listing_cover'],
               data['description'],
-                    data['category'][0],
-                  data['address'],
-                  data['phone'],
-                   data['facility'],
-                    data['latitude'],
-                     data['longitude'],
-                        data['email'],
-                        data['time']);
+              data['category'][0],
+              data['address'],
+              data['phone'],
+              data['facility'],
+              data['latitude'],
+              data['longitude'],
+              data['email'],
+              data['time']);
           Navigator.of(context).pushNamed('/Utilities', arguments: listingItem);
         },
         child: Container(

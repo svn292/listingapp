@@ -1,24 +1,25 @@
 import 'dart:convert';
 
 import 'package:daangor/config/ui_icons.dart';
+import 'package:daangor/src/models/CategoryItem.dart';
 import 'package:daangor/src/models/category_model.dart';
-import 'package:daangor/src/models/utilities.dart';
+import 'package:daangor/src/providers/data_provider.dart';
 import 'package:daangor/src/util/constants.dart';
 import 'package:daangor/src/widgets/CategoryGridItemWidget.dart';
-import 'package:daangor/src/widgets/CategoryListItemWidget.dart';
 import 'package:daangor/src/widgets/DrawerWidget.dart';
 import 'package:daangor/src/widgets/EmptyFavoritesWidget.dart';
-import 'package:daangor/src/widgets/FavoriteListItemWidget.dart';
-import 'package:daangor/src/widgets/SubCategoryListItemWidget.dart';
-import 'package:daangor/src/widgets/UtilitiesGridItemWidget.dart';
 import 'package:daangor/src/widgets/SearchBarWidget.dart';
+import 'package:daangor/src/widgets/SubCategoryListItemWidget.dart';
 import 'package:dio/dio.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_staggered_grid_view/flutter_staggered_grid_view.dart';
+import 'package:provider/provider.dart';
 
 class SubCat extends StatefulWidget {
   SubCat(this.id);
-  int id;
+
+  final int id;
+
   @override
   _SubCatState createState() => _SubCatState();
 }
@@ -26,8 +27,11 @@ class SubCat extends StatefulWidget {
 class _SubCatState extends State<SubCat> {
   final GlobalKey<ScaffoldState> _scaffoldKey = new GlobalKey<ScaffoldState>();
   String layout = 'list';
+  CategoryItem _categoryItem = null;
+
   // UtilitiesList _utilitiesList = new UtilitiesList();
   List<CategoryModel> categoryItems = List();
+
   getCategoryItemList(int id) async {
     categoryItems.clear();
     var response = await Dio().get("$BASEURL/getallsubcategory/$id");
@@ -58,6 +62,7 @@ class _SubCatState extends State<SubCat> {
 
   @override
   Widget build(BuildContext context) {
+    _categoryItem = Provider.of<DataProvider>(context, listen: false).getCategoryItem();
     print("45555555555555555  : " + widget.id.toString());
     return SafeArea(
       child: Scaffold(
@@ -76,11 +81,16 @@ class _SubCatState extends State<SubCat> {
               Text(
                 "Sub Category List",
                 style: Theme.of(context).textTheme.display1,
-              ), SizedBox(width: 20,),
-            Image.asset("img/dark_logo.png", width: 100,)
+              ),
+              SizedBox(
+                width: 20,
+              ),
+              Image.asset(
+                "img/dark_logo.png",
+                width: 100,
+              )
             ],
           ),
-          
           actions: <Widget>[
             //new ShoppingCartButtonWidget(
             // iconColor: Theme.of(context).hintColor, labelColor: Theme.of(context).accentColor),
@@ -116,14 +126,13 @@ class _SubCatState extends State<SubCat> {
                 child: Padding(
                   padding: const EdgeInsets.only(left: 20, right: 10),
                   child: ListTile(
-                    contentPadding:
-                        EdgeInsets.symmetric(vertical: 10, horizontal: 10),
+                    contentPadding: EdgeInsets.symmetric(vertical: 10, horizontal: 10),
                     leading: Icon(
                       UiIcons.heart,
                       color: Theme.of(context).hintColor,
                     ),
                     title: Text(
-                      CAT_LIST[widget.id],
+                      _categoryItem.name == null ? CAT_LIST[widget.id] : _categoryItem.name,
                       overflow: TextOverflow.fade,
                       softWrap: false,
                       style: Theme.of(context).textTheme.display1,
@@ -201,8 +210,7 @@ class _SubCatState extends State<SubCat> {
                       );
                     },
 //                  staggeredTileBuilder: (int index) => new StaggeredTile.fit(index % 2 == 0 ? 1 : 2),
-                    staggeredTileBuilder: (int index) =>
-                        new StaggeredTile.fit(2),
+                    staggeredTileBuilder: (int index) => new StaggeredTile.fit(2),
                     mainAxisSpacing: 15.0,
                     crossAxisSpacing: 15.0,
                   ),

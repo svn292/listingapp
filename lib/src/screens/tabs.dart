@@ -1,15 +1,9 @@
 import 'package:daangor/config/ui_icons.dart';
-
-import 'package:daangor/src/screens/account.dart';
 import 'package:daangor/src/screens/Categories.dart';
+import 'package:daangor/src/screens/account.dart';
 import 'package:daangor/src/screens/ads.dart';
-import 'package:daangor/src/screens/chat.dart';
-import 'package:daangor/src/screens/favorites.dart';
 import 'package:daangor/src/screens/home.dart';
-import 'package:daangor/src/screens/messages.dart';
-import 'package:daangor/src/screens/notifications.dart';
 import 'package:daangor/src/widgets/DrawerWidget.dart';
-import 'package:daangor/src/widgets/FilterWidget.dart';
 import 'package:flutter/material.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 
@@ -33,6 +27,7 @@ class TabsWidget extends StatefulWidget {
 
 class _TabsWidgetState extends State<TabsWidget> {
   final GlobalKey<ScaffoldState> _scaffoldKey = new GlobalKey<ScaffoldState>();
+
   @override
   initState() {
     _selectTab(widget.currentTab);
@@ -91,16 +86,19 @@ class _TabsWidgetState extends State<TabsWidget> {
         ),
         backgroundColor: Colors.transparent,
         elevation: 0,
-        title: Image.asset("img/dark_logo.png", width: 100,),
+        title: Image.asset(
+          "img/dark_logo.png",
+          width: 100,
+        ),
         // title: Row(
         //   children: <Widget>[
 
-            // Text(
-            //   widget.currentTitle,
-            //   style: Theme.of(context).textTheme.display1,
-            // ),
-            // SizedBox(width: 20,),
-            // Image.asset("img/dark_logo.png", width: 100,)
+        // Text(
+        //   widget.currentTitle,
+        //   style: Theme.of(context).textTheme.display1,
+        // ),
+        // SizedBox(width: 20,),
+        // Image.asset("img/dark_logo.png", width: 100,)
         //   ],
         // ),
         actions: <Widget>[
@@ -121,7 +119,6 @@ class _TabsWidgetState extends State<TabsWidget> {
       ),
       body: Stack(
         children: <Widget>[
-         
           Container(
             child: widget.currentPage,
             width: MediaQuery.of(context).size.width,

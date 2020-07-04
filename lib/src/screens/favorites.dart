@@ -1,8 +1,6 @@
 import 'dart:convert';
 
 import 'package:daangor/config/ui_icons.dart';
-import 'package:daangor/src/models/userNW.dart';
-import 'package:daangor/src/models/utilities.dart';
 import 'package:daangor/src/util/constants.dart';
 import 'package:daangor/src/widgets/EmptyFavoritesWidget.dart';
 import 'package:daangor/src/widgets/FavoriteListItemWidget.dart';

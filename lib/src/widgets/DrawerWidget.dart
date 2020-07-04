@@ -1,9 +1,11 @@
-import 'package:daangor/config/ui_icons.dart';
-import 'package:flutter/material.dart';
-import 'package:dio/dio.dart';
-import 'package:daangor/src/models/userNW.dart';
 import 'dart:convert';
+
+import 'package:daangor/config/ui_icons.dart';
+import 'package:daangor/src/models/userNW.dart';
+import 'package:daangor/src/screens/WebViewScreen.dart';
 import 'package:daangor/src/util/constants.dart';
+import 'package:dio/dio.dart';
+import 'package:flutter/material.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
 // ignore: must_be_immutable
@@ -15,23 +17,6 @@ class DrawerWidget extends StatefulWidget {
 
 class _DrawerWidgetState extends State<DrawerWidget> {
   UserModel _user;
-
-  getUserDetails() async {
-    Dio dio = Dio();
-    if (TOKEN != null && TOKEN != "") {
-      dio.options.headers["authorization"] = TOKEN;
-      var url = "$BASEURL/getuser";
-      var userresponse = await dio.get(url);
-      print(userresponse.data);
-      setState(() {
-        _user = UserModel(
-            jsonDecode(userresponse.data)['name'],
-            jsonDecode(userresponse.data)['email'],
-            jsonDecode(userresponse.data)['address'],
-            jsonDecode(userresponse.data)['phone']);
-      });
-    }
-  }
 
   @override
   void initState() {
@@ -48,11 +33,12 @@ class _DrawerWidgetState extends State<DrawerWidget> {
               ? Container(
                   child: Column(
                     children: <Widget>[
-                      SizedBox(height: 50,),
+                      SizedBox(
+                        height: 50,
+                      ),
                       Center(
                         child: FlatButton(
-                          padding:
-                              EdgeInsets.symmetric(vertical: 10, horizontal: 70),
+                          padding: EdgeInsets.symmetric(vertical: 10, horizontal: 70),
                           onPressed: () {
                             Navigator.of(context).pushNamed('/SignIn');
                           },
@@ -66,7 +52,9 @@ class _DrawerWidgetState extends State<DrawerWidget> {
                           shape: StadiumBorder(),
                         ),
                       ),
-                      SizedBox(height: 50,),
+                      SizedBox(
+                        height: 50,
+                      ),
                     ],
                   ),
                 )
@@ -88,7 +76,7 @@ class _DrawerWidgetState extends State<DrawerWidget> {
                     ),
                     currentAccountPicture: CircleAvatar(
                       backgroundColor: Theme.of(context).accentColor,
-                      backgroundImage: AssetImage("img/user0.jpg"),
+                      backgroundImage: NetworkImage(_user == null ? kThumbnailsPic : '$kImageBaseUrl' + _user.profileImage),
                     ),
                   ),
                 ),
@@ -145,6 +133,54 @@ class _DrawerWidgetState extends State<DrawerWidget> {
             ),
           ),
 
+          (TOKEN == null || TOKEN == "")
+              ? Container()
+              : ListTile(
+                  onTap: () {
+                    isSubscriptionActive();
+                  },
+                  leading: Icon(
+                    Icons.add,
+                    color: Theme.of(context).focusColor.withOpacity(1),
+                  ),
+                  title: Text(
+                    'Add business',
+                    style: Theme.of(context).textTheme.subhead,
+                  ),
+                ),
+          (TOKEN == null || TOKEN == "")
+              ? Container()
+              : ListTile(
+                  onTap: () {
+                    Navigator.of(context).pop();
+                    Navigator.of(context).pushNamed(WebViewScreen.id, arguments: 2);
+                  },
+                  leading: Icon(
+                    UiIcons.money,
+                    color: Theme.of(context).focusColor.withOpacity(1),
+                  ),
+                  title: Text(
+                    'Packages',
+                    style: Theme.of(context).textTheme.subhead,
+                  ),
+                ),
+
+          (TOKEN == null || TOKEN == "")
+              ? Container()
+              : ListTile(
+                  onTap: () {
+                    Navigator.of(context).pop();
+                    Navigator.of(context).pushNamed(WebViewScreen.id, arguments: 3);
+                  },
+                  leading: Icon(
+                    UiIcons.money,
+                    color: Theme.of(context).focusColor.withOpacity(1),
+                  ),
+                  title: Text(
+                    'Purchase History',
+                    style: Theme.of(context).textTheme.subhead,
+                  ),
+                ),
           ListTile(
             onTap: () {
               Navigator.of(context).pushNamed('/Tabs', arguments: 3);
@@ -174,12 +210,11 @@ class _DrawerWidgetState extends State<DrawerWidget> {
           (TOKEN == null || TOKEN == "")
               ? Container()
               : ListTile(
-                  onTap: () async{
-                     final prefs = await SharedPreferences.getInstance();
-                            prefs.setString('token',
-                                  "");
+                  onTap: () async {
+                    final prefs = await SharedPreferences.getInstance();
+                    prefs.setString('token', "");
                     setState(() {
-                      TOKEN="";
+                      TOKEN = "";
                     });
                     Navigator.of(context).pushReplacementNamed('/SignIn');
                   },
@@ -206,5 +241,40 @@ class _DrawerWidgetState extends State<DrawerWidget> {
         ],
       ),
     );
+  }
+
+  isSubscriptionActive() async {
+    Dio dio = Dio();
+    dio.options.headers['authorization'] = TOKEN;
+    var response = await dio.get('$BASEURL/currentpackage');
+    setState(() {});
+    print('currentpackage - ${response.data}');
+    Navigator.of(context).pop();
+
+    if (response.data == '[]') {
+      Navigator.of(context).pushNamed(WebViewScreen.id, arguments: 2);
+    } else if (response.data != '[]') {
+      Navigator.of(context).pushNamed(WebViewScreen.id, arguments: 1);
+    }
+  }
+
+  getUserDetails() async {
+    Dio dio = Dio();
+    if (TOKEN != null && TOKEN != "") {
+      dio.options.headers["authorization"] = TOKEN;
+      var url = "$BASEURL/getuser";
+      var userresponse = await dio.get(url);
+      print(userresponse.data);
+      setState(() {
+//        _user = UserModel(
+//            jsonDecode(userresponse.data)['name'],
+//            jsonDecode(userresponse.data)['email'],
+//            jsonDecode(userresponse.data)['address'],
+//            jsonDecode(userresponse.data)['phone'],
+//            jsonDecode(userresponse.data)['profile_image']);
+
+        _user = UserModel.fromJson(jsonDecode(userresponse.data));
+      });
+    }
   }
 }

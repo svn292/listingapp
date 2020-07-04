@@ -1,6 +1,6 @@
 import 'package:daangor/config/ui_icons.dart';
-import 'package:flutter/material.dart';
 import 'package:daangor/src/models/utilities.dart';
+import 'package:flutter/material.dart';
 
 class Category {
   String id = UniqueKey().toString();
@@ -29,80 +29,50 @@ class CategoriesList {
 
   CategoriesList() {
     this._list = [
-      new Category(
-          'Construction', UiIcons.construction, false, Colors.greenAccent, [
-        new Utilitie('Zogaa FlameSweater', 'img/mall1.jpeg', 'Health & Fitness',
-            80, 2554, 3.1, 10.5),
-        new Utilitie('Elu Shopping', 'img/elu.png', 'Business & Finance', 60,
-            63, 5.0, 20.2),
-        new Utilitie('Ritaj Mall', 'img/mall.jpg', 'Business & Finance', 80,
-            2554, 3.1, 10.5),
+      new Category('Construction', UiIcons.construction, false, Colors.greenAccent, [
+        new Utilitie('Zogaa FlameSweater', 'img/mall1.jpeg', 'Health & Fitness', 80, 2554, 3.1, 10.5),
+        new Utilitie('Elu Shopping', 'img/elu.png', 'Business & Finance', 60, 63, 5.0, 20.2),
+        new Utilitie('Ritaj Mall', 'img/mall.jpg', 'Business & Finance', 80, 2554, 3.1, 10.5),
       ]),
       new Category('Supply', UiIcons.sport, true, Colors.cyan, [
-        new Utilitie('Lounge Coffee Bar', 'img/coffeebar.jpg',
-            'Arts & Humanities', 25, 130, 4.3, 12.1),
-        new Utilitie('Night Bar', 'img/coffeebar1.jpg', 'Health & Fitness', 25,
-            130, 4.3, 12.1),
-        new Utilitie('Summer Coffee', 'img/coffeebar3.jpeg', 'Health & Fitness',
-            25, 130, 4.3, 12.1),
-        new Utilitie('Winter Coffee Bar', 'img/coffeebar4.jpg',
-            'Health & Fitness', 25, 130, 4.3, 12.1),
+        new Utilitie('Lounge Coffee Bar', 'img/coffeebar.jpg', 'Arts & Humanities', 25, 130, 4.3, 12.1),
+        new Utilitie('Night Bar', 'img/coffeebar1.jpg', 'Health & Fitness', 25, 130, 4.3, 12.1),
+        new Utilitie('Summer Coffee', 'img/coffeebar3.jpeg', 'Health & Fitness', 25, 130, 4.3, 12.1),
+        new Utilitie('Winter Coffee Bar', 'img/coffeebar4.jpg', 'Health & Fitness', 25, 130, 4.3, 12.1),
       ]),
-      new Category(
-          'Staff hiring', UiIcons.staffhiring, false, Colors.blueAccent, [
-        new Utilitie('Sequins Party Dance Ballet Event', 'img/event2.jpeg',
-            'Business & Finance', 80, 2554, 3.1, 10.5),
-        new Utilitie('Cenima film Event', 'img/event3.jpeg',
-            'Business & Finance', 80, 2554, 3.1, 10.5),
-        new Utilitie('TomorrowLand Event', 'img/event4.jpg',
-            'Arts & Humanities', 80, 2554, 3.1, 10.5),
-        new Utilitie('Creative Design Event', 'img/event1.jpg',
-            'Business & Finance', 80, 2554, 3.1, 10.5),
+      new Category('Staff hiring', UiIcons.staffhiring, false, Colors.blueAccent, [
+        new Utilitie('Sequins Party Dance Ballet Event', 'img/event2.jpeg', 'Business & Finance', 80, 2554, 3.1, 10.5),
+        new Utilitie('Cenima film Event', 'img/event3.jpeg', 'Business & Finance', 80, 2554, 3.1, 10.5),
+        new Utilitie('TomorrowLand Event', 'img/event4.jpg', 'Arts & Humanities', 80, 2554, 3.1, 10.5),
+        new Utilitie('Creative Design Event', 'img/event1.jpg', 'Business & Finance', 80, 2554, 3.1, 10.5),
       ]),
-      new Category(
-          'Transportation', UiIcons.transportation, false, Colors.orange, [
-        new Utilitie('WebSite Design ', 'img/jobs2.jpg', 'Business & Finance',
-            80, 2554, 3.1, 10.5),
-        new Utilitie('House Keeper', 'img/jobs3.jpg', 'Health & Fitness', 10,
-            415, 4.9, 15.3),
+      new Category('Transportation', UiIcons.transportation, false, Colors.orange, [
+        new Utilitie('WebSite Design ', 'img/jobs2.jpg', 'Business & Finance', 80, 2554, 3.1, 10.5),
+        new Utilitie('House Keeper', 'img/jobs3.jpg', 'Health & Fitness', 10, 415, 4.9, 15.3),
       ]),
       new Category('Drivers', UiIcons.driver, false, Colors.pinkAccent, [
-        new Utilitie('La Mega Pizza', 'img/pizza.jpg', 'Arts & Humanities', 25,
-            130, 4.3, 12.1),
-        new Utilitie('Piano Piano Food', 'img/restaurent.jpg',
-            'Arts & Humanities', 25, 130, 4.3, 12.1),
+        new Utilitie('La Mega Pizza', 'img/pizza.jpg', 'Arts & Humanities', 25, 130, 4.3, 12.1),
+        new Utilitie('Piano Piano Food', 'img/restaurent.jpg', 'Arts & Humanities', 25, 130, 4.3, 12.1),
       ]),
-      new Category(
-          'Shadddi', UiIcons.marriage, false, Colors.deepPurpleAccent, [
-        new Utilitie('BMW', 'img/car1.jpg', 'Coumputers & Technology', 80, 2554,
-            3.1, 10.5),
-        new Utilitie('Rali USA', 'img/car3.jpg', 'Arts & Humanities', 80, 2554,
-            3.1, 10.5),
-        new Utilitie('Car Repair', 'img/car2.jpg', 'Arts & Humanities', 80,
-            2554, 3.1, 10.5),
-        new Utilitie('Mechanical Cars', 'img/car4.jpg',
-            'Coumputers & Technology', 80, 2554, 3.1, 10.5),
+      new Category('Shadddi', UiIcons.marriage, false, Colors.deepPurpleAccent, [
+        new Utilitie('BMW', 'img/car1.jpg', 'Coumputers & Technology', 80, 2554, 3.1, 10.5),
+        new Utilitie('Rali USA', 'img/car3.jpg', 'Arts & Humanities', 80, 2554, 3.1, 10.5),
+        new Utilitie('Car Repair', 'img/car2.jpg', 'Arts & Humanities', 80, 2554, 3.1, 10.5),
+        new Utilitie('Mechanical Cars', 'img/car4.jpg', 'Coumputers & Technology', 80, 2554, 3.1, 10.5),
       ]),
       new Category('Rent', UiIcons.tent, false, Colors.brown, [
-        new Utilitie('Roland Gaross', 'img/sport1.jpg', 'Health & Fitness', 80,
-            2554, 3.1, 10.5),
-        new Utilitie('NBA Competions', 'img/sport2.jpeg', 'Health & Fitness',
-            80, 2554, 3.1, 10.5),
-        new Utilitie(
-            'Gym', 'img/gym.jpg', 'Health & Fitness', 10, 415, 4.9, 15.3),
+        new Utilitie('Roland Gaross', 'img/sport1.jpg', 'Health & Fitness', 80, 2554, 3.1, 10.5),
+        new Utilitie('NBA Competions', 'img/sport2.jpeg', 'Health & Fitness', 80, 2554, 3.1, 10.5),
+        new Utilitie('Gym', 'img/gym.jpg', 'Health & Fitness', 10, 415, 4.9, 15.3),
       ]),
       new Category('Education', UiIcons.education, true, Colors.redAccent, [
-        new Utilitie('California', 'img/chicagoTavel.jpg', 'Arts & Humanities',
-            60, 63, 5.0, 20.2),
-        new Utilitie('Colorado', 'img/colorado.jpg', 'Arts & Humanities', 25,
-            130, 4.3, 12.1),
-        new Utilitie(
-            'Paris', 'img/paris.jpg', 'Arts & Humanities', 35, 130, 6.3, 11.1),
-        new Utilitie('Marriott', 'img/marriott.jpg', 'Arts & Humanities', 10,
-            415, 4.9, 15.3),
-        new Utilitie('Hilton Hotel', 'img/hilton.webp',
-            'Coumputers & Technology', 200, 63, 5.0, 20.2),
+        new Utilitie('California', 'img/chicagoTavel.jpg', 'Arts & Humanities', 60, 63, 5.0, 20.2),
+        new Utilitie('Colorado', 'img/colorado.jpg', 'Arts & Humanities', 25, 130, 4.3, 12.1),
+        new Utilitie('Paris', 'img/paris.jpg', 'Arts & Humanities', 35, 130, 6.3, 11.1),
+        new Utilitie('Marriott', 'img/marriott.jpg', 'Arts & Humanities', 10, 415, 4.9, 15.3),
+        new Utilitie('Hilton Hotel', 'img/hilton.webp', 'Coumputers & Technology', 200, 63, 5.0, 20.2),
       ]),
+      new Category('More', Icons.more_horiz, true, Colors.redAccent, [])
     ];
   }
 

@@ -11,7 +11,7 @@ class SearchBarHomeWidget extends StatelessWidget {
   SearchBarHomeWidget({
     Key key,
   }) : super(key: key);
-  List<String> suggestions = [
+  final List<String> suggestions = [
     "Delux Room",
     "Tripple Room",
     "Single Room",

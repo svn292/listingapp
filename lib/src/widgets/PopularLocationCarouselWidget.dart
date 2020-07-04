@@ -1,11 +1,10 @@
 import 'package:daangor/src/models/listing.dart';
-import 'package:daangor/src/models/utilities.dart';
 import 'package:daangor/src/widgets/PopularLocationCarouselItemWidget.dart';
 import 'package:flutter/material.dart';
 
 class PopularLocationCarouselWidget extends StatelessWidget {
-  List<ListingItem> listingList;
-  String heroTag;
+  final List<ListingItem> listingList;
+  final String heroTag;
 
   PopularLocationCarouselWidget({
     Key key,

@@ -1,6 +1,3 @@
-import 'package:carousel_slider/carousel_slider.dart';
-import 'package:daangor/src/models/slider.dart';
-import 'package:daangor/src/models/slider.dart' as prefix0;
 import 'package:flutter/material.dart';
 
 class HomeSliderWidget extends StatefulWidget {
@@ -26,47 +23,40 @@ class _HomeSliderWidgetState extends State<HomeSliderWidget> {
         //     // });
         //   },
         //   items: <Widget>[
-            Container(
-              height: 200,
-              decoration: BoxDecoration(
-                image: DecorationImage(
-                    image: AssetImage("img/home_section_1.jpg"),
-                    fit: BoxFit.cover),
-                boxShadow: [
-                  BoxShadow(
-                      color: Theme.of(context).hintColor.withOpacity(0.2),
-                      offset: Offset(0, 4),
-                      blurRadius: 9)
-                ],
-              ),
-              child: Container(
-                alignment: AlignmentDirectional.bottomEnd,
-                width: double.infinity,
-                padding: const EdgeInsets.symmetric(horizontal: 20),
-              ),
-            ),
-          
-          // items: _sliderList.list.map((prefix0.Slider slide) {
-          //   return Builder(
-          //     builder: (BuildContext context) {
-          //       return Container(
-          //         height: 200,
-          //         decoration: BoxDecoration(
-          //           image: DecorationImage(image: AssetImage(slide.image), fit: BoxFit.cover),
-          //           boxShadow: [
-          //             BoxShadow(
-          //                 color: Theme.of(context).hintColor.withOpacity(0.2), offset: Offset(0, 4), blurRadius: 9)
-          //           ],
-          //         ),
-          //         child: Container(
-          //           alignment: AlignmentDirectional.bottomEnd,
-          //           width: double.infinity,
-          //           padding: const EdgeInsets.symmetric(horizontal: 20),
-          //         ),
-          //       );
-          //     },
-          //   );
-          // }).toList(),
+        Container(
+          height: 200,
+          decoration: BoxDecoration(
+            image: DecorationImage(image: AssetImage("img/home_section_1.jpg"), fit: BoxFit.cover),
+            boxShadow: [BoxShadow(color: Theme.of(context).hintColor.withOpacity(0.2), offset: Offset(0, 4), blurRadius: 9)],
+          ),
+          child: Container(
+            alignment: AlignmentDirectional.bottomEnd,
+            width: double.infinity,
+            padding: const EdgeInsets.symmetric(horizontal: 20),
+          ),
+        ),
+
+        // items: _sliderList.list.map((prefix0.Slider slide) {
+        //   return Builder(
+        //     builder: (BuildContext context) {
+        //       return Container(
+        //         height: 200,
+        //         decoration: BoxDecoration(
+        //           image: DecorationImage(image: AssetImage(slide.image), fit: BoxFit.cover),
+        //           boxShadow: [
+        //             BoxShadow(
+        //                 color: Theme.of(context).hintColor.withOpacity(0.2), offset: Offset(0, 4), blurRadius: 9)
+        //           ],
+        //         ),
+        //         child: Container(
+        //           alignment: AlignmentDirectional.bottomEnd,
+        //           width: double.infinity,
+        //           padding: const EdgeInsets.symmetric(horizontal: 20),
+        //         ),
+        //       );
+        //     },
+        //   );
+        // }).toList(),
         // ),
         // Center(
         //   child: Row(

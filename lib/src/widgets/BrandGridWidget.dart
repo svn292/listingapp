@@ -1,9 +1,8 @@
 import 'package:daangor/src/models/category.dart';
-import 'package:daangor/src/models/route_argument.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_staggered_grid_view/flutter_staggered_grid_view.dart';
 
-class BrandGridWidget extends StatelessWidget {
+class BrandGridWidget extends StatefulWidget {
   const BrandGridWidget({
     Key key,
     @required CategoriesList categoriesList,
@@ -13,21 +12,25 @@ class BrandGridWidget extends StatelessWidget {
   final CategoriesList _categoriesList;
 
   @override
+  _BrandGridWidgetState createState() => _BrandGridWidgetState();
+}
+
+class _BrandGridWidgetState extends State<BrandGridWidget> {
+  @override
   Widget build(BuildContext context) {
     return StaggeredGridView.countBuilder(
       primary: false,
       shrinkWrap: true,
       padding: EdgeInsets.only(top: 15),
-      crossAxisCount:
-          MediaQuery.of(context).orientation == Orientation.portrait ? 2 : 4,
-      itemCount: _categoriesList.list.length,
+      crossAxisCount: MediaQuery.of(context).orientation == Orientation.portrait ? 2 : 4,
+      itemCount: widget._categoriesList.list.length,
       itemBuilder: (BuildContext context, int index) {
-        Category category = _categoriesList.list.elementAt(index);
+        Category category = widget._categoriesList.list.elementAt(index);
         return InkWell(
           onTap: () {
             // print("ASDASDASDS");
             // Navigator.of(context).pushNamed('/CategoriesItem',arguments: index+1);
-            Navigator.of(context).pushNamed('/SubCategory',arguments: index+1);
+            Navigator.of(context).pushNamed('/SubCategory', arguments: index + 1);
             // Navigator.of(context).pushNamed('/Tabs',
             //     arguments: "6_${_categoriesList.list.elementAt(index).id}");
             // Navigator.of(context)
@@ -43,20 +46,19 @@ class BrandGridWidget extends StatelessWidget {
                 width: double.infinity,
                 height: 100,
                 decoration: BoxDecoration(
-                    borderRadius: BorderRadius.circular(10),
-                    boxShadow: [
-                      BoxShadow(
-                          color: Theme.of(context).hintColor.withOpacity(0.10),
-                          offset: Offset(0, 4),
-                          blurRadius: 10)
+                  borderRadius: BorderRadius.circular(10),
+                  boxShadow: [
+                    BoxShadow(color: Theme.of(context).hintColor.withOpacity(0.10), offset: Offset(0, 4), blurRadius: 10)
+                  ],
+                  gradient: LinearGradient(
+                    begin: Alignment.bottomLeft,
+                    end: Alignment.topRight,
+                    colors: [
+                      category.color,
+                      category.color.withOpacity(0.2),
                     ],
-                    gradient: LinearGradient(
-                        begin: Alignment.bottomLeft,
-                        end: Alignment.topRight,
-                        colors: [
-                          category.color,
-                          category.color.withOpacity(0.2),
-                        ])),
+                  ),
+                ),
                 child: Hero(
                   tag: category.id,
                   child: new Icon(
@@ -99,10 +101,7 @@ class BrandGridWidget extends StatelessWidget {
                     color: Theme.of(context).primaryColor,
                     borderRadius: BorderRadius.circular(6),
                     boxShadow: [
-                      BoxShadow(
-                          color: Theme.of(context).hintColor.withOpacity(0.15),
-                          offset: Offset(0, 3),
-                          blurRadius: 10)
+                      BoxShadow(color: Theme.of(context).hintColor.withOpacity(0.15), offset: Offset(0, 3), blurRadius: 10)
                     ]),
                 child: Column(
                   crossAxisAlignment: CrossAxisAlignment.start,
