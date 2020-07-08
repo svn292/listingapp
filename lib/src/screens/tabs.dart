@@ -1,11 +1,14 @@
 import 'package:daangor/config/ui_icons.dart';
+import 'package:daangor/src/providers/data_provider.dart';
 import 'package:daangor/src/screens/Categories.dart';
 import 'package:daangor/src/screens/account.dart';
 import 'package:daangor/src/screens/ads.dart';
-import 'package:daangor/src/screens/home.dart';
+import 'package:daangor/src/screens/home_widget.dart';
+import 'package:daangor/src/screens/city_select_screen.dart';
 import 'package:daangor/src/widgets/DrawerWidget.dart';
 import 'package:flutter/material.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
+import 'package:provider/provider.dart';
 
 // ignore: must_be_immutable
 class TabsWidget extends StatefulWidget {
@@ -86,9 +89,28 @@ class _TabsWidgetState extends State<TabsWidget> {
         ),
         backgroundColor: Colors.transparent,
         elevation: 0,
-        title: Image.asset(
-          "img/dark_logo.png",
-          width: 100,
+        title: Row(
+          children: [
+            context.watch<DataProvider>().getCityModel() == null
+                ? IconButton(
+                    icon: Icon(Icons.location_city),
+                    onPressed: () {
+                      Navigator.pushNamed(context, CitySelectScreen.id);
+                    })
+                : InkWell(
+                    onTap: () {
+                      Navigator.pushNamed(context, CitySelectScreen.id);
+                    },
+                    child: Text(context.watch<DataProvider>().getCityModel().name),
+                  ),
+            SizedBox(
+              width: 10,
+            ),
+            Image.asset(
+              "img/dark_logo.png",
+              width: 100,
+            ),
+          ],
         ),
         // title: Row(
         //   children: <Widget>[

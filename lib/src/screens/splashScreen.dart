@@ -1,8 +1,13 @@
+import 'dart:convert';
+
+import 'package:daangor/src/models/city_model.dart';
+import 'package:daangor/src/providers/data_provider.dart';
 import 'package:daangor/src/screens/signin.dart';
 import 'package:daangor/src/screens/tabs.dart';
 import 'package:daangor/src/util/constants.dart';
 import 'package:dio/dio.dart';
 import 'package:flutter/material.dart';
+import 'package:provider/provider.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import 'package:splashscreen/splashscreen.dart';
 
@@ -16,6 +21,7 @@ class _SplashState extends State<Splash> {
 
   getTokenAvailability() async {
     final prefs = await SharedPreferences.getInstance();
+
     TOKEN = prefs.getString('token');
     if (TOKEN != null && TOKEN != "") {
       Dio dio = Dio();
@@ -47,17 +53,18 @@ class _SplashState extends State<Splash> {
 
   @override
   Widget build(BuildContext context) {
-    return new SplashScreen(
+    initiateCityModel();
+    return SplashScreen(
       seconds: 8,
       navigateAfterSeconds: tokenAvailability
           ? TabsWidget(
               currentTab: 0,
             )
           : SignInWidget(),
-      title: new Text(
+      title: Text(
         'Assam 1st Business Listing',
         textAlign: TextAlign.center,
-        style: new TextStyle(
+        style: TextStyle(
           fontWeight: FontWeight.bold,
           fontSize: 25.0,
           color: Color.fromRGBO(104, 61, 146, 1),
@@ -71,5 +78,15 @@ class _SplashState extends State<Splash> {
       // backgroundColor: Theme.of(context).accentColor.withOpacity(0.7),
       loaderColor: Color.fromRGBO(104, 61, 146, 1),
     );
+  }
+
+  initiateCityModel() async {
+    var prefs = await SharedPreferences.getInstance();
+
+    var cityModel = CityModel.fromJson(json.decode(prefs.getString('set_city')));
+
+    if (cityModel != null) {
+      context.read<DataProvider>().changeCityModel(cityModel);
+    }
   }
 }

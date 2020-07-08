@@ -4,6 +4,7 @@ import 'package:daangor/src/screens/ads.dart';
 import 'package:daangor/src/screens/categoriesNW.dart';
 import 'package:daangor/src/screens/get_form_user.dart';
 import 'package:daangor/src/screens/languages.dart';
+import 'package:daangor/src/screens/city_select_screen.dart';
 import 'package:daangor/src/screens/search.dart';
 import 'package:daangor/src/screens/signin.dart';
 import 'package:daangor/src/screens/signup.dart';
@@ -47,8 +48,10 @@ class RouteGenerator {
         return MaterialPageRoute(builder: (_) => FavoritesWidget());
       case '/GetFormUser':
         return MaterialPageRoute(builder: (_) => GetFormUser());
-      case '/HelpScreen':
+      case '/WebViewScreen':
         return MaterialPageRoute(builder: (_) => WebViewScreen(args));
+      case CitySelectScreen.id:
+        return MaterialPageRoute(builder: (_) => CitySelectScreen());
       // case '/Categorie':
       //   return MaterialPageRoute(builder: (_) => CategorieWidget(routeArgument: args as  RouteArgument,));
 

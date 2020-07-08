@@ -54,7 +54,8 @@ class _OnBoardingWidgetState extends State<OnBoardingWidget> {
                               padding: const EdgeInsets.all(16),
                               child: Text(
                                 boarding.description,
-                                style: Theme.of(context).textTheme.display1,textAlign: TextAlign.center,
+                                style: Theme.of(context).textTheme.display1,
+                                textAlign: TextAlign.center,
                               ),
                             ),
                           ),
@@ -81,9 +82,12 @@ class _OnBoardingWidgetState extends State<OnBoardingWidget> {
                               borderRadius: BorderRadius.all(
                                 Radius.circular(100),
                               ),
-                              color: _current == _onBoardingList.list.indexOf(boarding)
+                              color: _current ==
+                                      _onBoardingList.list.indexOf(boarding)
                                   ? Theme.of(context).hintColor.withOpacity(0.8)
-                                  : Theme.of(context).hintColor.withOpacity(0.2)),
+                                  : Theme.of(context)
+                                      .hintColor
+                                      .withOpacity(0.2)),
                         );
                       }).toList(),
                     ),
@@ -91,15 +95,16 @@ class _OnBoardingWidgetState extends State<OnBoardingWidget> {
                   Container(
                     padding: const EdgeInsets.symmetric(horizontal: 40),
                     child: FlatButton(
-                      padding: EdgeInsets.symmetric(horizontal: 35, vertical: 8),
+                      padding:
+                          EdgeInsets.symmetric(horizontal: 35, vertical: 8),
                       onPressed: () {
                         Navigator.of(context).pushNamed('/SignIn');
                       },
-                      child:Text(
-                            'Skip',
-                            style: Theme.of(context).textTheme.display1.merge(
-                                  TextStyle(color: Theme.of(context).primaryColor),
-                                ),
+                      child: Text(
+                        'Skip',
+                        style: Theme.of(context).textTheme.display1.merge(
+                              TextStyle(color: Theme.of(context).primaryColor),
+                            ),
                       ),
                       color: Color.fromRGBO(55, 169, 157, 1),
                       shape: RoundedRectangleBorder(
@@ -109,7 +114,7 @@ class _OnBoardingWidgetState extends State<OnBoardingWidget> {
                   ),
                 ],
               ),
-            )     
+            )
           ],
         ),
       ),

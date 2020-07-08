@@ -2,14 +2,11 @@ import 'dart:convert';
 
 import 'package:daangor/config/ui_icons.dart';
 import 'package:daangor/src/models/category_model.dart';
-import 'package:daangor/src/models/utilities.dart';
 import 'package:daangor/src/util/constants.dart';
 import 'package:daangor/src/widgets/CategoryGridItemWidget.dart';
 import 'package:daangor/src/widgets/CategoryListItemWidget.dart';
 import 'package:daangor/src/widgets/DrawerWidget.dart';
 import 'package:daangor/src/widgets/EmptyFavoritesWidget.dart';
-import 'package:daangor/src/widgets/FavoriteListItemWidget.dart';
-import 'package:daangor/src/widgets/UtilitiesGridItemWidget.dart';
 import 'package:daangor/src/widgets/SearchBarWidget.dart';
 import 'package:dio/dio.dart';
 import 'package:flutter/material.dart';

@@ -8,7 +8,7 @@ import 'package:fluttertoast/fluttertoast.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
 class WebViewScreen extends StatefulWidget {
-  static String id = '/HelpScreen';
+  static String id = '/WebViewScreen';
   final int urlId;
 
   WebViewScreen(this.urlId);
@@ -38,7 +38,8 @@ class WebViewScreenState extends State<WebViewScreen> {
       }
     });
 
-    _onHttpError = flutterWebViewPlugin.onHttpError.listen((WebViewHttpError error) {
+    _onHttpError =
+        flutterWebViewPlugin.onHttpError.listen((WebViewHttpError error) {
       flutterWebViewPlugin.reload();
     });
 
@@ -58,11 +59,14 @@ class WebViewScreenState extends State<WebViewScreen> {
     final prefs = await SharedPreferences.getInstance();
     String url = '';
     if (widget.urlId == 1) {
-      url = 'https://daangor.com/user/listing_webform/add?token=${prefs.getString('token')}';
+      url =
+          'https://daangor.com/user/listing_webform/add?token=${prefs.getString('token')}';
     } else if (widget.urlId == 2) {
-      url = 'https://daangor.com/user/package_webview/add?token=${prefs.getString('token')}';
+      url =
+          'https://daangor.com/user/package_webview/add?token=${prefs.getString('token')}';
     } else if (widget.urlId == 3) {
-      url = 'https://daangor.com/user/purchasehistory_webview/add?token=${prefs.getString('token')}';
+      url =
+          'https://daangor.com/user/purchasehistory_webview/add?token=${prefs.getString('token')}';
     }
 
     print('url just hit - $url');

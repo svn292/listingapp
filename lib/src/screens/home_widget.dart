@@ -2,8 +2,11 @@ import 'dart:convert';
 
 import 'package:daangor/config/ui_icons.dart';
 import 'package:daangor/src/models/category.dart';
+import 'package:daangor/src/models/city_model.dart';
 import 'package:daangor/src/models/listing.dart';
 import 'package:daangor/src/models/utilities.dart';
+import 'package:daangor/src/providers/data_provider.dart';
+import 'package:daangor/src/util/CustomInterceptors.dart';
 import 'package:daangor/src/util/constants.dart';
 import 'package:daangor/src/widgets/CategoriesIconsContainerWidget.dart';
 import 'package:daangor/src/widgets/HomeSliderWidget.dart';
@@ -11,6 +14,8 @@ import 'package:daangor/src/widgets/PopularLocationCarouselWidget.dart';
 import 'package:daangor/src/widgets/SearchBarHomeWidget.dart';
 import 'package:dio/dio.dart';
 import 'package:flutter/material.dart';
+import 'package:provider/provider.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 
 class HomeWidget extends StatefulWidget {
   @override
@@ -130,15 +135,23 @@ class _HomeWidgetState extends State<HomeWidget> with SingleTickerProviderStateM
   }
 
   getPopularList() async {
-    var response = await Dio().get("$BASEURL/popular_listing");
-    print("MMMMMMMMM   ::   " + response.data);
+    var prefs = await SharedPreferences.getInstance();
 
+    var cityModel = CityModel.fromJson(json.decode(prefs.getString('set_city')));
+
+    var dio = Dio();
+    dio.interceptors.add(CustomInterceptors());
+    String url = '$BASEURL/popular_listing';
+
+    if (cityModel != null) {
+      url = url + '?city=${cityModel.id}';
+    }
+    var response = await dio.get(url);
     var data = jsonDecode(response.data);
     if (this.mounted) {
       setState(() {
         listingItems.clear();
         for (Map dt in data) {
-          print("AAAAAAAAAA  :  " + dt['category'][0]);
           listingItems.add(ListingItem(
               dt['code'],
               dt['name'],
