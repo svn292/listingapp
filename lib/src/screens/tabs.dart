@@ -95,11 +95,11 @@ class _TabsWidgetState extends State<TabsWidget> {
                 ? IconButton(
                     icon: Icon(Icons.location_city),
                     onPressed: () {
-                      Navigator.pushNamed(context, CitySelectScreen.id);
+                      _navigateAndDisplaySelection(context);
                     })
                 : InkWell(
                     onTap: () {
-                      Navigator.pushNamed(context, CitySelectScreen.id);
+                      _navigateAndDisplaySelection(context);
                     },
                     child: Text(context.watch<DataProvider>().getCityModel().name),
                   ),
@@ -216,6 +216,13 @@ class _TabsWidgetState extends State<TabsWidget> {
       ),
     );
   }
-}
 
-//  Navigator.of(context).pushNamed('/Categories');
+  _navigateAndDisplaySelection(BuildContext context) async {
+  
+    
+    final result = await Navigator.pushNamed(context, CitySelectScreen.id);
+    print(result);
+
+    
+  }
+}

@@ -9,6 +9,7 @@ import 'package:provider/provider.dart';
 
 class CitySelectScreen extends StatefulWidget {
   static const String id = 'CitySelectScreen';
+  static const CityModel cityModel = null;
 
   @override
   _CitySelectScreenState createState() => _CitySelectScreenState();
@@ -50,7 +51,7 @@ class _CitySelectScreenState extends State<CitySelectScreen> {
                             return InkWell(
                               onTap: () {
                                 context.read<DataProvider>().changeCityModel(snapshot.data[index]);
-                                Navigator.pop(context);
+                                Navigator.pop(context,snapshot.data[index]);
                               },
                               child: ListTile(
                                 title: Text(snapshot.data[index].name),

@@ -5,6 +5,7 @@ import 'package:daangor/config/ui_icons.dart';
 import 'package:daangor/src/models/FavsData.dart';
 import 'package:daangor/src/models/category_model.dart';
 import 'package:daangor/src/screens/WebViewScreen.dart';
+import 'package:daangor/src/util/CustomInterceptors.dart';
 import 'package:daangor/src/util/constants.dart';
 import 'package:daangor/src/widgets/CategoryGridItemWidget.dart';
 import 'package:daangor/src/widgets/CategoryListItemWidget.dart';
@@ -204,6 +205,8 @@ class _AdsState extends State<Ads> {
   getAds() async {
     categoryItems.clear();
     Dio dio = Dio();
+
+    dio.interceptors.add(CustomInterceptors());
     if (TOKEN != null && TOKEN != "") {
       dio.options.headers["authorization"] = TOKEN;
 

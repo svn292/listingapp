@@ -4,6 +4,7 @@ import 'package:daangor/config/ui_icons.dart';
 import 'package:daangor/src/models/CategoryItem.dart';
 import 'package:daangor/src/models/category_model.dart';
 import 'package:daangor/src/providers/data_provider.dart';
+import 'package:daangor/src/util/CustomInterceptors.dart';
 import 'package:daangor/src/util/constants.dart';
 import 'package:daangor/src/widgets/CategoryGridItemWidget.dart';
 import 'package:daangor/src/widgets/DrawerWidget.dart';
@@ -34,7 +35,11 @@ class _SubCatState extends State<SubCat> {
 
   getCategoryItemList(int id) async {
     categoryItems.clear();
-    var response = await Dio().get("$BASEURL/getallsubcategory/$id");
+
+    var dio = Dio();
+    dio.interceptors.add(CustomInterceptors());
+
+    var response = await dio.get("$BASEURL/getallsubcategory/$id");
     List lst = jsonDecode(response.data);
     print(lst);
     if (this.mounted) {

@@ -1,16 +1,18 @@
 import 'package:daangor/config/ui_icons.dart';
 import 'package:daangor/src/models/listing.dart';
 import 'package:daangor/src/widgets/DrawerWidget.dart';
-import 'package:daangor/src/widgets/UtilitiesHomeTabWidget.dart';
 import 'package:daangor/src/widgets/ReviewsListWidget.dart';
+import 'package:daangor/src/widgets/UtilitiesHomeTabWidget.dart';
 import 'package:flutter/material.dart';
 
 // ignore: must_be_immutable
 class UtilitieWidget extends StatefulWidget {
   // RouteArgument routeArgument;
   ListingItem listingItem;
+
   // String _heroTag;
   UtilitieWidget(this.listingItem);
+
   // UtilitieWidget({Key key, this.routeArgument}) {
   //   _utilitie = this.routeArgument.argumentsList[0] as Utilitie;
   //   _heroTag = this.routeArgument.argumentsList[1] as String;
@@ -20,8 +22,7 @@ class UtilitieWidget extends StatefulWidget {
   _UtilitieWidgetState createState() => _UtilitieWidgetState();
 }
 
-class _UtilitieWidgetState extends State<UtilitieWidget>
-    with SingleTickerProviderStateMixin {
+class _UtilitieWidgetState extends State<UtilitieWidget> with SingleTickerProviderStateMixin {
   TabController _tabController;
   final GlobalKey<ScaffoldState> _scaffoldKey = new GlobalKey<ScaffoldState>();
   int _tabIndex = 0;
@@ -29,8 +30,7 @@ class _UtilitieWidgetState extends State<UtilitieWidget>
   @override
   void initState() {
     print("IIIIIIIIIIIIIIINN    ::  " + widget.listingItem.code);
-    _tabController =
-        TabController(length: 2, initialIndex: _tabIndex, vsync: this);
+    _tabController = TabController(length: 2, initialIndex: _tabIndex, vsync: this);
     _tabController.addListener(_handleTabSelection);
     super.initState();
   }
@@ -69,8 +69,7 @@ class _UtilitieWidgetState extends State<UtilitieWidget>
           floating: true,
           automaticallyImplyLeading: false,
           leading: new IconButton(
-            icon: new Icon(UiIcons.return_icon,
-                color: Theme.of(context).hintColor),
+            icon: new Icon(UiIcons.return_icon, color: Theme.of(context).hintColor),
             onPressed: () => Navigator.of(context).pop(),
           ),
           actions: <Widget>[
@@ -113,21 +112,17 @@ class _UtilitieWidgetState extends State<UtilitieWidget>
                   Container(
                     width: double.infinity,
                     decoration: BoxDecoration(
-                        gradient: LinearGradient(
-                            begin: Alignment.topCenter,
-                            end: Alignment.bottomCenter,
-                            colors: [
-                          Theme.of(context).primaryColor,
-                          Colors.white.withOpacity(0),
-                          Colors.white.withOpacity(0),
-                          Theme.of(context).scaffoldBackgroundColor
-                        ],
-                            stops: [
-                          0,
-                          0.4,
-                          0.6,
-                          1
-                        ])),
+                        gradient: LinearGradient(begin: Alignment.topCenter, end: Alignment.bottomCenter, colors: [
+                      Theme.of(context).primaryColor,
+                      Colors.white.withOpacity(0),
+                      Colors.white.withOpacity(0),
+                      Theme.of(context).scaffoldBackgroundColor
+                    ], stops: [
+                      0,
+                      0.4,
+                      0.6,
+                      1
+                    ])),
                   ),
                 ],
               ),
@@ -139,9 +134,8 @@ class _UtilitieWidgetState extends State<UtilitieWidget>
               labelPadding: EdgeInsets.symmetric(horizontal: 10),
               unselectedLabelColor: Theme.of(context).focusColor.withOpacity(1),
               labelColor: Theme.of(context).primaryColor,
-              indicator: BoxDecoration(
-                  borderRadius: BorderRadius.circular(50),
-                  color: Theme.of(context).focusColor.withOpacity(0.6)),
+              indicator:
+                  BoxDecoration(borderRadius: BorderRadius.circular(50), color: Theme.of(context).focusColor.withOpacity(0.6)),
               tabs: [
                 Tab(
                   child: Container(
@@ -186,8 +180,7 @@ class _UtilitieWidgetState extends State<UtilitieWidget>
               child: Column(
                 children: <Widget>[
                   Padding(
-                    padding: const EdgeInsets.symmetric(
-                        horizontal: 20, vertical: 15),
+                    padding: const EdgeInsets.symmetric(horizontal: 20, vertical: 15),
                     child: ListTile(
                       dense: true,
                       contentPadding: EdgeInsets.symmetric(vertical: 0),

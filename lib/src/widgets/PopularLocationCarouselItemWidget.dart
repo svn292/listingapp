@@ -1,5 +1,4 @@
 import 'package:daangor/src/models/listing.dart';
-//import 'package:daangor/src/widgets/AvailableProgressBarWidget.dart';
 import 'package:flutter/material.dart';
 
 // ignore: must_be_immutable

@@ -15,7 +15,6 @@ import 'package:daangor/src/widgets/SearchBarHomeWidget.dart';
 import 'package:dio/dio.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
-import 'package:shared_preferences/shared_preferences.dart';
 
 class HomeWidget extends StatefulWidget {
   @override
@@ -23,7 +22,7 @@ class HomeWidget extends StatefulWidget {
 }
 
 class _HomeWidgetState extends State<HomeWidget> with SingleTickerProviderStateMixin {
-  List<ListingItem> listingItems = List();
+  Future<List<ListingItem>> listingItems;
 
   getCategoryList() async {
     List categories = List();
@@ -47,12 +46,12 @@ class _HomeWidgetState extends State<HomeWidget> with SingleTickerProviderStateM
   void initState() {
     // print("LLLLLLLLLLLLLLLLLLLLL   :   " + TOKEN);
 //    getCategoryList();
-    getPopularList();
+
     animationController = AnimationController(duration: Duration(milliseconds: 200), vsync: this);
     CurvedAnimation curve = CurvedAnimation(parent: animationController, curve: Curves.easeIn);
     animationOpacity = Tween(begin: 0.0, end: 1.0).animate(curve)
       ..addListener(() {
-        setState(() {});
+        // setState(() {});
       });
 
     animationController.forward();
@@ -64,91 +63,131 @@ class _HomeWidgetState extends State<HomeWidget> with SingleTickerProviderStateM
     //_utilitiesfBrandList = _brandsList.list.firstWhere((brand) {
     //return brand.selected;
     //}).utilities;
+    listingItems = getPopularList(null);
     super.initState();
   }
 
   @override
   Widget build(BuildContext context) {
-    return SingleChildScrollView(
-      child: Column(
-        children: <Widget>[
-          Stack(
-            children: <Widget>[
-              HomeSliderWidget(),
-              Container(
-                margin: const EdgeInsets.only(top: 150, bottom: 20),
-                padding: const EdgeInsets.only(right: 20, left: 20),
-                child: SearchBarHomeWidget(),
-              ),
-            ],
-          ),
-          Container(
-            padding: const EdgeInsets.only(right: 2, left: 2),
-            child: CategoriesIconsContainerWidget(
-              categoriesList: _categoriesList,
-            ),
-          ),
-          Padding(
-              padding: const EdgeInsets.symmetric(horizontal: 20, vertical: 8),
+    return Consumer<DataProvider>(
+      builder: (BuildContext context, value, Widget child) {
+        if (value.getCityModel() != null) {
+          print('--------------Consumer- ${value.getCityModel().name}');
+          listingItems = getPopularList(value.getCityModel());
+        }
+        return FutureBuilder(
+          future: listingItems,
+          builder: (BuildContext context, AsyncSnapshot<List<ListingItem>> snapshot) {
+            return SingleChildScrollView(
               child: Column(
                 children: <Widget>[
-                  ListTile(
-                    dense: true,
-                    contentPadding: EdgeInsets.symmetric(vertical: 0),
-                    leading: Icon(
-                      UiIcons.favorites,
-                      color: Theme.of(context).hintColor,
-                    ),
-                    title: Text(
-                      'Popular',
-                      style: Theme.of(context).textTheme.display1,
+                  Stack(
+                    children: <Widget>[
+                      HomeSliderWidget(),
+                      Container(
+                        margin: const EdgeInsets.only(top: 150, bottom: 20),
+                        padding: const EdgeInsets.only(right: 20, left: 20),
+                        child: SearchBarHomeWidget(),
+                      ),
+                    ],
+                  ),
+                  Container(
+                    padding: const EdgeInsets.only(right: 2, left: 2),
+                    child: CategoriesIconsContainerWidget(
+                      categoriesList: _categoriesList,
                     ),
                   ),
+                  Padding(
+                      padding: const EdgeInsets.symmetric(horizontal: 20, vertical: 8),
+                      child: Column(
+                        children: <Widget>[
+                          ListTile(
+                            dense: true,
+                            contentPadding: EdgeInsets.symmetric(vertical: 0),
+                            leading: Icon(
+                              UiIcons.favorites,
+                              color: Theme.of(context).hintColor,
+                            ),
+                            title: Text(
+                              'Popular',
+                              style: Theme.of(context).textTheme.display1,
+                            ),
+                          ),
+                        ],
+                      )),
+                  snapshot.hasData
+                      ? PopularLocationCarouselWidget(heroTag: 'home_flash_sales', listingList: snapshot.data)
+                      : Container(),
+
+                  //   Padding(
+                  //     padding: const EdgeInsets.symmetric(horizontal: 20, vertical: 8),
+                  //     child:Column(
+                  //       children: <Widget>[
+                  //         ListTile(
+                  //           dense: true,
+                  //           contentPadding: EdgeInsets.symmetric(vertical: 0),
+                  //           leading: Icon(
+                  //             UiIcons.box,
+                  //             color: Theme.of(context).hintColor,
+                  //           ),
+                  //           title: Text(
+                  //             'Recent',
+                  //             style: Theme.of(context).textTheme.display1,
+                  //           ),
+                  //         ),
+                  //       ],
+                  //     )
+
+                  // ),
+                  //   CategorizedUtilitiesWidget(animationOpacity : animationOpacity ,utilitiesList: _utilitiesList.recentList,)
                 ],
-              )),
-          PopularLocationCarouselWidget(heroTag: 'home_flash_sales', listingList: listingItems),
-
-          //   Padding(
-          //     padding: const EdgeInsets.symmetric(horizontal: 20, vertical: 8),
-          //     child:Column(
-          //       children: <Widget>[
-          //         ListTile(
-          //           dense: true,
-          //           contentPadding: EdgeInsets.symmetric(vertical: 0),
-          //           leading: Icon(
-          //             UiIcons.box,
-          //             color: Theme.of(context).hintColor,
-          //           ),
-          //           title: Text(
-          //             'Recent',
-          //             style: Theme.of(context).textTheme.display1,
-          //           ),
-          //         ),
-          //       ],
-          //     )
-
-          // ),
-          //   CategorizedUtilitiesWidget(animationOpacity : animationOpacity ,utilitiesList: _utilitiesList.recentList,)
-        ],
-      ),
+              ),
+            );
+          },
+        );
+      },
     );
   }
 
-  getPopularList() async {
-    var prefs = await SharedPreferences.getInstance();
+  Future<List<ListingItem>> getPopularList(CityModel cityModel) async {
+//    var prefs = await SharedPreferences.getInstance();
 
-    var cityModel = CityModel.fromJson(json.decode(prefs.getString('set_city')));
+    var _cityModel = cityModel;
 
     var dio = Dio();
     dio.interceptors.add(CustomInterceptors());
     String url = '$BASEURL/popular_listing';
 
-    if (cityModel != null) {
-      url = url + '?city=${cityModel.id}';
+    if (_cityModel != null) {
+      url = url + '?city=${_cityModel.id}';
     }
     var response = await dio.get(url);
     var data = jsonDecode(response.data);
-    if (this.mounted) {
+
+    List<ListingItem> listingItemsData = [];
+    listingItemsData.clear();
+    for (Map dt in data) {
+      listingItemsData.add(ListingItem(
+          dt['code'],
+          dt['name'],
+          dt['listing_type'],
+          dt['listing_cover'] == null
+              ? "https://daangor.com/uploads/listing_thumbnails/thumbnail.png"
+              : CAT_TUMB_BASE_URL + dt['listing_cover'],
+          dt['description'],
+          dt['category'][0],
+          dt['address'],
+          dt['phone'],
+          dt['facility'],
+          dt['latitude'],
+          dt['longitude'],
+          dt['email'],
+          dt['time']));
+    }
+
+    return listingItemsData;
+
+    /*if (this.mounted) {
       setState(() {
         listingItems.clear();
         for (Map dt in data) {
@@ -170,6 +209,6 @@ class _HomeWidgetState extends State<HomeWidget> with SingleTickerProviderStateM
               dt['time']));
         }
       });
-    }
+    }*/
   }
 }
